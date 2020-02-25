@@ -1,0 +1,27 @@
+// WordPress dependencies.
+const { __ } = wp.i18n;
+const { Fragment } = wp.element;
+const { RichText } = wp.editor;
+
+export default {
+  title: __('<% TITLE_JS %>', __TEXTDOMAIN__),
+
+  description: __('This is the description of the <% TITLE_JS %>.', __TEXTDOMAIN__),
+
+  icon: 'welcome-learn-more',
+
+  attributes: { text: { type: 'string' } },
+
+  edit({ attributes, setAttributes }) {
+    const { text } = attributes;
+
+    return (
+      <Fragment>
+        <RichText
+          value={ text }
+          onChange={ (value) => setAttributes({ text: value }) }
+        />
+      </Fragment>
+    );
+  }
+};

@@ -1,0 +1,7 @@
+.block-example {
+  background-image: url("#{$assets-path}/images/test.png");
+
+  &__content {
+    background-color: pink;
+  }
+}

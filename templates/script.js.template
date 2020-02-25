@@ -1,0 +1,5 @@
+'use strict';
+
+const { blockData } = window;
+const data = blockData['<% CLASS_NAME_CSS %>'];
+

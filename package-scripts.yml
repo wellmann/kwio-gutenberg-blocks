@@ -1,0 +1,23 @@
+scripts:
+  watch:
+    default: concurrently "nps watch.editor.block" "nps watch.editor.style" "nps watch.frontend.style" "nps watch.frontend.script"
+    editor:
+      block: onchange "src/blocks/*/block.js" -- onerror "nps clean.editor.block && nps build.editor.block"
+      style: onchange "src/blocks/*/editor.scss" -- onerror "nps clean.editor.style && nps build.editor.style"
+    frontend:
+      style: onchange "src/blocks/*/style.scss" -- onerror "nps clean.frontend.style && nps build.frontend.style"
+      script: onchange "src/blocks/*/script.js" -- onerror "nps clean.frontend.script && nps build.frontend.script"
+  build:
+    editor:
+      block: browserify src/blocks.js -t [ babelify ] -t [ bulkify ] -d | exorcist dist/js/editor.blocks.js.map | uglifyjs -c -m | hashmark -l 8 dist/js/editor.blocks.{hash}.js -s
+      style: concat src/editor.styles.scss | node tasks/scss.js | hashmark -l 8 dist/css/editor.styles.{hash}.css -s
+    frontend:
+      style: concat src/styles.scss | node tasks/scss.js | hashmark -l 8 dist/css/blocks.{hash}.css -s
+      script: browserify src/scripts.js -t [ babelify ] -t [ bulkify ] -d | exorcist dist/js/blocks.js.map | uglifyjs -c -m | hashmark -l 8 dist/js/blocks.{hash}.js -s
+  clean:
+    editor:
+      block: rimraf dist/js/editor.blocks.*.js
+      style: rimraf dist/css/editor.styles.*.css
+    frontend:
+      style: rimraf dist/css/blocks.*.css
+      script: rimraf dist/js/blocks.*.js

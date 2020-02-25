@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "color-hex-length": "short",
+    "color-hex-case": "lower",
+    "number-leading-zero": "never",
+    "number-no-trailing-zeros": true,
+    "string-quotes": "double",
+    "declaration-empty-line-before": "never",
+    "rule-empty-line-before": ["always-multi-line", {
+      "ignore": ["after-comment"]
+    }],
+    "at-rule-empty-line-before": ["always", {
+      "except": ["inside-block", "blockless-after-blockless"],
+      "ignore": ["after-comment"]
+    }],
+    "at-rule-name-case": "lower",
+    "indentation": 2
+  }
+}
