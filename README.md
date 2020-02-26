@@ -32,7 +32,7 @@ Use the optional `-d` or `--dynamic` flag to create a dynamic block, which means
 * The category property defaults to `common`
 * The `save()` function is ommitted on purpose, since all options shall be saved as an object literal in the post content.
 
-##### block.php
+##### block.php *(optional)*
 
 * Class that extends `Base_Block` and implements a custom render function.
 
@@ -54,8 +54,8 @@ Use the optional `-d` or `--dynamic` flag to create a dynamic block, which means
 
 ### Usage of styles & scripts
 
-The included files are automatically compiled, combined and minified to `wp-content/cache/const/` (including *.map files) if 'Module-Kompilierung aktivieren' in the WordPress toolbar is activated (**You need to be logged in as an administrator!**).
+The blocks assets are automatically compiled, combined and minified to their respective folders in `dist` (including *.map files).  
 The following variables can be used inside `*.scss` files:
-* `assets_path` - holds the path to the `modules` folder (can be customized with the following filter `const/divi_modules/plugin_path`)
+* `assets_path` - holds the path to the themes `assets` folder
 
 If used in conjunction with a specific setup and theme, variables and mixins from `<theme-name>/assets/css/_includes` can be imported and used inside the blocks `*.scss` files.
