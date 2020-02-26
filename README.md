@@ -24,12 +24,15 @@ git clone git@github.com:wellmann/kwio-gutenberg-blocks && npm install
 To create custom modules run `create-block <name>`. The blocks folder will be created in `src/blocks/<name>` along with the required files and boilerplate code.  
 Use the optional `-d` or `--dynamic` flag to create a dynamic block, which means an additional PHP class (block.php) will be generated in the blocks folder.
 
+#### Categories
+
+A selected set of Gutenberg default modules are grouped into their own category while blocks belonging to this namespace are put in a different category.
+
 #### Anatomy of a block
 
 ##### block.js
 
 * Exports an object with the properties of the [block configuration object](https://wordpress.org/gutenberg/handbook/designers-developers/developers/block-api/block-registration/).
-* The category property defaults to `common`
 * The `save()` function is ommitted on purpose, since all options shall be saved as an object literal in the post content.
 
 ##### block.php *(optional)*
