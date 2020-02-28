@@ -10,7 +10,7 @@
       "ignore": ["after-comment"]
     }],
     "at-rule-empty-line-before": ["always", {
-      "except": ["inside-block", "blockless-after-blockless"],
+      "except": ["blockless-after-blockless"],
       "ignore": ["after-comment"]
     }],
     "at-rule-name-case": "lower",
