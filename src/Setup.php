@@ -21,6 +21,7 @@ final class Setup {
         'core/code',
         'core/wysiwyg',
         'core/columns',
+        'core/group',
         'core/button',
         'core/spacer',
         'core/nextpage',
