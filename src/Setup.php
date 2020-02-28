@@ -20,6 +20,7 @@ final class Setup {
         'core/table',
         'core/code',
         'core/wysiwyg',
+        'core/column',
         'core/columns',
         'core/group',
         'core/button',
