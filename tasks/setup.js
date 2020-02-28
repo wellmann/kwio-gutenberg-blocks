@@ -35,7 +35,7 @@ files.forEach((file) => {
   helper.replaceInFile(file, {
     'Plugin Name: KWIO': 'Plugin Name: ' + name,
     'namespace KWIO': 'namespace ' + namespace,
-    'KWIO\\Gutenberg_Blocks\\': namespace + '\\Gutenberg_Blocks\\'
+    'KWIO\\\\Gutenberg_Blocks': namespace + '\\\\Gutenberg_Blocks'
   });
 });
 
