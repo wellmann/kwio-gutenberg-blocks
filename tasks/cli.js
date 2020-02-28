@@ -20,7 +20,7 @@ if (!process.argv[2]) {
 const blocksDir = '/src/blocks';
 const blockName = process.argv[2];
 const blockDir = helper.getPluginPath() + blocksDir + '/' + blockName;
-const files = ['block.js', 'editor.scss', 'script.js', 'style.scss'];
+const files = ['block.js', '_editor.scss', 'script.js', '_style.scss'];
 
 // Create block folder.
 if (fs.existsSync(blockDir)) {
@@ -40,8 +40,8 @@ files.forEach((file) => {
 });
 
 // Add imports for current block to main SCSS loaders.
-fs.appendFileSync(helper.getPluginPath() + '/src/editor.styles.scss', `@import "blocks/${blockName}/editor.scss";`);
-fs.appendFileSync(helper.getPluginPath() + '/src/styles.scss', `@import "blocks/${blockName}/style.scss";`);
+fs.appendFileSync(helper.getPluginPath() + '/src/editor.styles.scss', `@import "blocks/${blockName}/_editor.scss";`);
+fs.appendFileSync(helper.getPluginPath() + '/src/styles.scss', `@import "blocks/${blockName}/_style.scss";`);
 
 console.log(helper.successMessage('Block has been successfully created.'));
 console.log(helper.infoMessage('Block has been created at', blockDir));
