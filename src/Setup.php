@@ -66,10 +66,10 @@ final class Setup {
     }
 
     public function collect_blocks(): void {
-        $blocks = array_diff(scandir(self::BLOCKS_DIR), ['.', '..']);
+        $blocks = glob(self::BLOCKS_DIR . '/*', GLOB_ONLYDIR);
 
         foreach ($blocks as $block) {
-            $block = sanitize_title($block);
+            $block = basename($block);
             $this->register_block($block);
         }
     }
