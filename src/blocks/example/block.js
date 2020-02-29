@@ -1,11 +1,13 @@
-// Local dependencies.
-import withWordLimit from '../../components/with-word-limit';
-
 // WordPress dependencies.
 const { __ } = wp.i18n;
 const { Fragment } = wp.element;
 const { RichText } = wp.editor;
 const { TextControl } = wp.components;
+
+// Local dependencies.
+import withWordLimit from '../../components/with-word-limit';
+import './editor.scss';
+import './style.scss';
 
 export default {
   title: __('Example Block', __TEXTDOMAIN__),

@@ -1,9 +1,3 @@
-//
-// Script.js loader.
-//
+const importAll = (r) => r.keys().forEach(r);
 
-'use strict';
-
-const bulk = require('bulk-require');
-
-bulk(__dirname, ['blocks/*/script.js']);
+importAll(require.context('./blocks', true, /script\.js$/));

@@ -15,37 +15,37 @@ final class Assets {
     }
 
     public function enqueue_editor_assets(): void {
-        $this->enqueue(true);
+        $this->enqueue('editor');
     }
 
     public function enqueue_front_end_assets(): void {
-        $this->enqueue();
+        $this->enqueue('blocks');
     }
 
     /**
      * Enqueue assets based on context and file type.
      */
-    private function enqueue(bool $is_editor = false): void {
-        $prefix = $is_editor ? 'editor.': '';
-        $js_paths = glob(DIR_PATH . "dist/js/{$prefix}blocks.*.js");
-        $css_paths = glob(DIR_PATH . "dist/css/{$prefix}{blocks,styles}.*.css", GLOB_BRACE);
+    private function enqueue(string $filename): void {
+        $js_paths = glob(DIR_PATH . "dist/{$filename}.*.js");
+        $css_paths = glob(DIR_PATH . "dist/{$filename}.*.css");
         $dependencies = [
             'editor' => [
                 'js' => ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'],
                 'css' => ['wp-edit-blocks']
             ],
-            '' => ['js' => [], 'css' => []]
+            'blocks' => ['js' => [], 'css' => []]
         ];
         $handle = PREFIX . '-blocks';
-        $prefix = rtrim($prefix, '.');
 
         foreach ($js_paths as $js_path) {
             $src = DIR_URL . ltrim($js_path, DIR_PATH);
-            wp_enqueue_script($handle, $src, $dependencies[$prefix]['js'], null, true);
+            wp_enqueue_script($handle, $src, $dependencies[$filename]['js'], null, true);
 
-            if ($is_editor) {
+            if ($filename === 'editor') {
                 wp_localize_script($handle, 'blockOptions', ['defaultBlocks' => Setup::DEFAULT_BLOCKS]);
-            } else {
+            }
+
+            if ($filename === 'blocks') {
                 $block_data = Block_Data::get_instance();
                 wp_localize_script($handle, 'blockData', $block_data->get_all());
             }
@@ -53,7 +53,7 @@ final class Assets {
 
         foreach ($css_paths as $css_path) {
             $src = DIR_URL . ltrim($css_path, DIR_PATH);
-            wp_enqueue_style($handle, $src, $dependencies[$prefix]['css'], null);
+            wp_enqueue_style($handle, $src, $dependencies[$filename]['css'], null);
         }
     }
 }

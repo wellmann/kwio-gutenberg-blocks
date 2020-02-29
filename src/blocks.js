@@ -1,20 +1,10 @@
-//
-// Block.js loader.
-//
-
-'use strict';
-
-// External dependencies.
-const bulk = require('bulk-require');
-const slugify = require('slugify');
-
-// Local dependencies.
-require('./hooks');
-
 // WordPress dependencies.
 const { registerBlockType } = wp.blocks;
 
-const { blocks } = bulk(__dirname, ['blocks/*/block.js']);
+// Local dependencies.
+import './hooks';
+
+const requireContext = require.context('./blocks', true, /block\.js$/);
 const defaultSettings = {
   category: __PREFIX__,
   save({ attributes }) {
@@ -26,10 +16,10 @@ const defaultSettings = {
   }
 };
 
-Object.entries(blocks).forEach(([blockName, block]) => {
-  let blockNamespace = __PREFIX__ + '/' + slugify(blockName);
-  let { block: blockModule } = block;
-  let blockSettings = blockModule.default;
+requireContext.keys().forEach((key) => {
+  let blockName = key.split('/')[1];
+  let blockNamespace = __PREFIX__ + '/' + blockName;
+  let { default: blockSettings } = requireContext(key);
   let settings = {
     ...defaultSettings,
     ...blockSettings
