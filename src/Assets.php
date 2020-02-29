@@ -54,6 +54,11 @@ final class Assets {
         foreach ($css_paths as $css_path) {
             $src = DIR_URL . ltrim($css_path, DIR_PATH);
             wp_enqueue_style($handle, $src, $dependencies[$filename]['css'], null);
+
+            $critical_css_path = DIR_PATH . 'dist/critical.css';
+            if ($filename === 'blocks' && is_readable($critical_css_path)) {
+                wp_add_inline_style($handle, trim(file_get_contents($critical_css_path)));
+            }
         }
     }
 }

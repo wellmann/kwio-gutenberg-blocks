@@ -10,6 +10,7 @@ const helper = require('./tasks/helper');
 const { themeAssets, themeScssIncludes } = pkg.config;
 const EditorCssPlugin = new ExtractTextPlugin({ filename: 'editor.[hash:8].css' });
 const BlockCssPlugin = new ExtractTextPlugin({ filename: 'blocks.[hash:8].css' });
+const BlockCriticalCssPlugin = new ExtractTextPlugin({ filename: 'critical.css' });
 const cssLoaderOptions = {
   use: [
     {
@@ -48,7 +49,8 @@ module.exports = {
       filename: '[file].map'
     }),
     EditorCssPlugin,
-    BlockCssPlugin
+    BlockCssPlugin,
+    BlockCriticalCssPlugin
   ],
   output: {
     filename: '[name].[contenthash:8].js',
@@ -70,6 +72,11 @@ module.exports = {
         test: /style\.s?css$/,
         exclude: /node_modules/,
         use: BlockCssPlugin.extract(cssLoaderOptions)
+      },
+      {
+        test: /style\.critical\.s?css$/,
+        exclude: /node_modules/,
+        use: BlockCriticalCssPlugin.extract(cssLoaderOptions)
       }
     ]
   }
