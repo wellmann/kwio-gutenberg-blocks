@@ -6,7 +6,7 @@ class Block_Data {
 
     private static $instance;
 
-    private $data;
+    private $data = [];
 
     public static function get_instance() {
         if (self::$instance === null) {
