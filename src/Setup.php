@@ -19,7 +19,7 @@ final class Setup {
         'core/video',
         'core/table',
         'core/code',
-        'core/wysiwyg',
+        'core/freeform',
         'core/column',
         'core/columns',
         'core/group',
