@@ -6,6 +6,7 @@ class Block_Data {
 
     private static $instance;
 
+    private $context;
     private $data = [];
 
     public static function get_instance() {
@@ -16,21 +17,29 @@ class Block_Data {
         return self::$instance;
     }
 
+    public function set_context(string $context): void {
+        $this->context = $context;
+    }
+
     public function add(string $block_name, array $data): void {
         $key = sanitize_title($block_name);
-        $this->data[$key] = $data;
+        $this->data[$this->context][$key] = $data;
     }
 
     public function get(string $block_name): array {
         $key = sanitize_title($block_name);
-        if (empty($this->data[$key])) {
+        if (empty($this->data[$this->context][$key])) {
             return [];
         }
 
-        return $this->data[$key];
+        return $this->data[$this->context][$key];
     }
 
     public function get_all(): array {
-        return $this->data;
+        if (empty($this->data[$this->context])) {
+            return [];
+        }
+
+        return $this->data[$this->context];
     }
 }

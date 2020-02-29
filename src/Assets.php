@@ -42,11 +42,19 @@ final class Assets {
             wp_enqueue_script($handle, $src, $dependencies[$filename]['js'], null, true);
 
             if ($filename === 'editor') {
-                wp_localize_script($handle, 'blockOptions', ['defaultBlocks' => Setup::DEFAULT_BLOCKS]);
+                $block_data = Block_Data::get_instance();
+                $block_data->set_context('editor');
+
+                wp_localize_script($handle, 'blockOptions', [
+                    'defaultBlocks' => Setup::DEFAULT_BLOCKS,
+                    'data' => $block_data->get_all()
+                ]);
             }
 
-            if ($filename === 'blocks') {
+            if ($filename === 'blocks' && !is_admin()) {
                 $block_data = Block_Data::get_instance();
+                $block_data->set_context('frontend');
+
                 wp_localize_script($handle, 'blockData', $block_data->get_all());
             }
         }
@@ -56,7 +64,7 @@ final class Assets {
             wp_enqueue_style($handle, $src, $dependencies[$filename]['css'], null);
 
             $critical_css_path = DIR_PATH . 'dist/critical.css';
-            if ($filename === 'blocks' && is_readable($critical_css_path)) {
+            if ($filename === 'blocks' && !is_admin() && is_readable($critical_css_path)) {
                 wp_add_inline_style($handle, trim(file_get_contents($critical_css_path)));
             }
         }
