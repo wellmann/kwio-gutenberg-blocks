@@ -3,24 +3,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "X-Generator: babel-plugin-makepot\n"
 
-#: src/blocks/example/block.js:11
+#: src/blocks/example/block.js:13
 msgid "Example Block"
 msgstr ""
 
-#: src/blocks/example/block.js:13
+#: src/blocks/example/block.js:15
 msgid "This is the description of the Example Block."
 msgstr ""
 
-#: src/blocks/example/block.js:50
+#: src/blocks/example/block.js:52
 msgid "Text"
-msgstr ""
-
-#: src/blocks/test/block.js:7
-msgid "Test Block"
-msgstr ""
-
-#: src/blocks/test/block.js:9
-msgid "This is the description of the Test Block."
 msgstr ""
 
 #: src/hooks/device-visibility.js:61
