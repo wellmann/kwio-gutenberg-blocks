@@ -15,7 +15,6 @@ final class Setup {
         'core/image',
         'core/heading',
         'core/list',
-        'core/file',
         'core/video',
         'core/table',
         'core/code',
@@ -24,9 +23,6 @@ final class Setup {
         'core/columns',
         'core/group',
         'core/button',
-        'core/spacer',
-        'core/nextpage',
-        'core/more',
         'core/shortcode'
     ];
     const BLOCKS_DIR = DIR_PATH . 'src/blocks';
