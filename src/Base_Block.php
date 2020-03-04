@@ -2,6 +2,7 @@
 
 namespace KWIO\Gutenberg_Blocks;
 
+use Timber\Post;
 use Timber\Timber;
 
 class Base_Block {
@@ -53,6 +54,7 @@ class Base_Block {
 
         $tag_attr_string = $this->to_tag_attr_string($this->tag_attr);
         $data = array_merge($this->data, $data);
+        $data['post'] = new Post();
         $block_html = Timber::compile($file, $data);
 
         return "<div{$tag_attr_string}>{$block_html}</div>";
