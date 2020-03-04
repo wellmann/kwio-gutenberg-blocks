@@ -1,27 +1,33 @@
+// External dependencies.
+import classNames from 'classnames';
+import BEMHelper from 'react-bem-helper';
+
 // WordPress dependencies.
 const { __ } = wp.i18n;
-const { Fragment } = wp.element;
 const { RichText } = wp.editor;
+
+// Local dependencies.
+import './style.scss';
 
 export default {
   title: __('<% TITLE_JS %>', __TEXTDOMAIN__),
-
   description: __('This is the description of the <% TITLE_JS %>.', __TEXTDOMAIN__),
-
   icon: 'welcome-learn-more',
-
   attributes: { text: { type: 'string' } },
-
-  edit({ attributes, setAttributes }) {
+  edit({ attributes, setAttributes, className, isSelected }) {
     const { text } = attributes;
+    const bem = new BEMHelper(className.split(' ')[0]);
 
     return (
-      <Fragment>
+      <div className={ className }>
         <RichText
+          { ...bem('text') }
+          format="string"
+          placeholder="Lorem Ipsum"
           value={ text }
           onChange={ (value) => setAttributes({ text: value }) }
         />
-      </Fragment>
+      </div>
     );
   }
 };

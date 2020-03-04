@@ -1,21 +1,20 @@
+// External dependencies.
+import classNames from 'classnames';
+import BEMHelper from 'react-bem-helper';
+
 // WordPress dependencies.
 const { __ } = wp.i18n;
-const { Fragment } = wp.element;
 const { RichText } = wp.editor;
 const { TextControl } = wp.components;
 
 // Local dependencies.
 import withWordLimit from '../../components/with-word-limit';
-import './editor.scss';
 import './style.scss';
 
 export default {
   title: __('Example Block', __TEXTDOMAIN__),
-
   description: __('This is the description of the Example Block.', __TEXTDOMAIN__),
-
   icon: 'welcome-learn-more',
-
   attributes: {
     headline: { type: 'string' },
     text: {
@@ -24,20 +23,21 @@ export default {
     },
     author: { type: 'string' }
   },
-
   supports: {
-    align: ['wide', 'full'],
+    align: ['full'],
     anchor: true
   },
 
-  edit({ attributes, setAttributes }) {
+  edit({ attributes, setAttributes, className, isSelected }) {
     const { headline, text, author } = attributes;
     //const Headline = withWordLimit({ limit: 1 })(RichText);
+    const bem = new BEMHelper(className.split(' ')[0]);
 
     return (
-      <Fragment>
+      <div className={ className }>
         <RichText
           tagName="h2"
+          className={ bem('content') }
           format="string"
           value={ headline }
           placeholder="Headline"
@@ -53,7 +53,7 @@ export default {
           value={ author }
           onChange={ (event) => setAttributes({ author: event.target.value }) }
         />
-      </Fragment>
+      </div>
     );
   }
 };

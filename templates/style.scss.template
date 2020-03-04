@@ -1,0 +1,8 @@
+@import "variables";
+
+.<% CLASS_NAME_CSS %> {
+
+  &__text {
+
+  }
+}

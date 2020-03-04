@@ -1,8 +1,10 @@
 // WordPress dependencies.
+const { serverSideRender: ServerSideRender } = wp;
 const { registerBlockType } = wp.blocks;
 
 // Local dependencies.
 import './hooks';
+import './editor.scss';
 
 const requireContext = require.context('./blocks', true, /block\.js$/);
 const defaultSettings = {
@@ -22,6 +24,17 @@ requireContext.keys().forEach((key) => {
   let { default: blockSettings } = requireContext(key);
   let settings = {
     ...defaultSettings,
+    ...{
+      edit({ attributes, className }) {
+        return (
+          <ServerSideRender
+            block={ blockNamespace }
+            attributes={ attributes }
+            className={ className }
+          />
+        );
+      }
+    },
     ...blockSettings
   };
 

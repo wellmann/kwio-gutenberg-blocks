@@ -16,7 +16,7 @@ class Example extends Base_Block {
     public function render(array $attributes, string $content): string {
         parent::render($attributes, $content);
 
-        $content = '123';
+        //$content = '123';
 
         return $this->set_view($this->dir_path . '/view.twig', compact('content'));
     }
