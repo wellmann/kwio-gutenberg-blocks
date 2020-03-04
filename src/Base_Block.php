@@ -24,6 +24,10 @@ class Base_Block {
         $this->data['base_class'] = $this->base_class;
     }
 
+    public function get_attributes(): array {
+        return [];
+    }
+
     public function render(array $attributes, string $content): string {
         $this->data = array_merge($this->data, $attributes, compact('content'));
         $this->hide_mobile = $this->extract_attr('hideMobile');

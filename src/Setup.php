@@ -89,10 +89,13 @@ final class Setup {
         $class_name = __NAMESPACE__ . '\\' . $class_name;
         $class_instance = new $class_name($block);
         $name = PREFIX . '/' . $block;
+        $args = ['render_callback' => [$class_instance, 'render']];
 
-        register_block_type($name, [
-            'render_callback' => [$class_instance, 'render']
-        ]);
+        if (!empty($class_instance->get_attributes())) {
+            $args['attributes'] = $class_instance->get_attributes();
+        }
+
+        register_block_type($name, $args);
 
         self::$custom_blocks[] = $name;
     }
