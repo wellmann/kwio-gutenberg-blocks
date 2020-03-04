@@ -55,7 +55,9 @@ final class Assets {
                 $block_data = Block_Data::get_instance();
                 $block_data->set_context('frontend');
 
-                wp_localize_script($handle, 'blockData', $block_data->get_all());
+                if (!empty($block_data->get_all())) {
+                    wp_localize_script($handle, 'blockData', $block_data->get_all());
+                }
             }
         }
 
