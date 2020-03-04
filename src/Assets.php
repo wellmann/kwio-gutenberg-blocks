@@ -35,7 +35,7 @@ final class Assets {
             ],
             'blocks' => ['js' => [], 'css' => []]
         ];
-        $handle = PREFIX . '-blocks';
+        $handle = PREFIX . '-' . $filename;
 
         foreach ($js_paths as $js_path) {
             $src = DIR_URL . ltrim($js_path, DIR_PATH);
