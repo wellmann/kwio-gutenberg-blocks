@@ -67,7 +67,9 @@ final class Assets {
 
             $critical_css_path = DIR_PATH . 'dist/critical.css';
             if ($filename === 'blocks' && !is_admin() && is_readable($critical_css_path)) {
-                wp_add_inline_style($handle, trim(file_get_contents($critical_css_path)));
+                $critical_css = file_get_contents($critical_css_path);
+                $critical_css = str_replace('../../../../', content_url('/'), $critical_css);
+                wp_add_inline_style($handle, trim($critical_css));
             }
         }
     }
