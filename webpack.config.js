@@ -1,5 +1,6 @@
 // External dependencies.
 const webpack = require('webpack');
+const glob = require('glob');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -7,6 +8,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pkg = require('./package.json');
 const helper = require('./tasks/helper');
 
+let entries = { 'editor': './src/blocks.js' };
 const { themeAssets, themeScssIncludes } = pkg.config;
 const EditorCssPlugin = new ExtractTextPlugin({ filename: 'editor.[hash:8].css' });
 const BlockCssPlugin = new ExtractTextPlugin({ filename: 'blocks.[hash:8].css' });
@@ -36,12 +38,15 @@ const cssLoaderOptions = {
   ]
 };
 
+// Check if there are any front end scripts.
+const scriptFiles = glob.sync('./src/blocks/**/script.js');
+if (scriptFiles.length > 0) {
+  entries = { ...entries, ...{ 'blocks': './src/scripts.js' } };
+}
+
 module.exports = {
   mode: 'production',
-  entry: {
-    'editor': './src/blocks.js',
-    'blocks': './src/scripts.js'
-  },
+  entry: entries,
   plugins: [
     new CleanWebpackPlugin(),
     new webpack.SourceMapDevToolPlugin({
