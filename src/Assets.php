@@ -15,58 +15,53 @@ final class Assets {
     }
 
     public function enqueue_editor_assets(): void {
-        $this->enqueue('editor');
+        $this->enqueue('editor', 'js', ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor']);
+        $this->enqueue('editor', 'css', ['wp-edit-blocks']);
     }
 
     public function enqueue_front_end_assets(): void {
-        $this->enqueue('blocks');
+        $this->enqueue('blocks', 'css');
+        $this->enqueue('blocks', 'js');
     }
 
     /**
-     * Enqueue assets based on context and file type.
+     * Enqueue asset based on file name and file type.
      */
-    private function enqueue(string $filename): void {
-        $js_paths = glob(DIR_PATH . "dist/{$filename}.*.js");
-        $css_paths = glob(DIR_PATH . "dist/{$filename}.*.css");
-        $dependencies = [
-            'editor' => [
-                'js' => ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'],
-                'css' => ['wp-edit-blocks']
-            ],
-            'blocks' => ['js' => [], 'css' => []]
-        ];
+    private function enqueue(string $filename, string $type, array $dependencies = []): void {
+        $paths = glob(DIR_PATH . "dist/{$filename}.*.{$type}");
+        $path = isset($paths[0]) ? $paths[0] : '';
         $handle = PREFIX . '-' . $filename;
+        $src = DIR_URL . ltrim($path, DIR_PATH);
+        $media = $filename === 'blocks' ? 'nonblocking' : 'all';
+        $block_data = Block_Data::get_instance();
+        $block_data->set_context($filename === 'blocks' ? 'frontend' : $filename);
 
-        foreach ($js_paths as $js_path) {
-            $src = DIR_URL . ltrim($js_path, DIR_PATH);
-            wp_enqueue_script($handle, $src, $dependencies[$filename]['js'], null, true);
-
-            if ($filename === 'editor') {
-                $block_data = Block_Data::get_instance();
-                $block_data->set_context('editor');
-
-                wp_localize_script($handle, 'blockOptions', [
-                    'defaultBlocks' => Setup::DEFAULT_BLOCKS,
-                    'data' => $block_data->get_all()
-                ]);
-            }
-
-            if ($filename === 'blocks' && !is_admin()) {
-                $block_data = Block_Data::get_instance();
-                $block_data->set_context('frontend');
-
-                if (!empty($block_data->get_all())) {
-                    wp_localize_script($handle, 'blockData', $block_data->get_all());
-                }
-            }
+        if (empty($path)) {
+            return;
         }
 
-        foreach ($css_paths as $css_path) {
-            $src = DIR_URL . ltrim($css_path, DIR_PATH);
-            wp_enqueue_style($handle, $src, $dependencies[$filename]['css'], null);
+        if ($type === 'js') {
+            wp_enqueue_script($handle, $src, $dependencies, null, true);
+        }
+
+        if ($type === 'css') {
+            wp_enqueue_style($handle, $src, $dependencies, null, $media);
+        }
+
+        if ($filename === 'editor') {
+            wp_localize_script($handle, 'blockOptions', [
+                'defaultBlocks' => Setup::DEFAULT_BLOCKS,
+                'data' => $block_data->get_all()
+            ]);
+        }
+
+        if ($filename === 'blocks' && !is_admin()) {
+            if (!empty($block_data->get_all())) {
+                wp_localize_script($handle, 'blockData', $block_data->get_all());
+            }
 
             $critical_css_path = DIR_PATH . 'dist/critical.css';
-            if ($filename === 'blocks' && !is_admin() && is_readable($critical_css_path)) {
+            if (is_readable($critical_css_path)) {
                 $critical_css = file_get_contents($critical_css_path);
                 $critical_css = str_replace('../../../../', content_url('/'), $critical_css);
                 wp_add_inline_style($handle, trim($critical_css));
