@@ -10,10 +10,10 @@
 const fs = require('fs');
 
 // Local dependencies.
-const helper = require('./helper');
+const utils = require('./utils');
 
 if ((process.argv[2] !== '-p' || process.argv[2] !== '--prefix' ) && !process.argv[3]) {
-  console.log(helper.errorMessage('Please specify the new prefix.'));
+  console.log(utils.errorMessage('Please specify the new prefix.'));
   process.exit(1);
 }
 
@@ -25,14 +25,14 @@ const files = [
   'composer.json'
 ];
 const prefix = process.argv[3];
-const pluginPath = helper.getPluginPath();
+const pluginPath = utils.getPluginPath();
 const newPluginPath = pluginPath.replace('kwio-gutenberg-blocks', prefix + '-gutenberg-blocks');
-const name = helper.formClassName(prefix, ' ');
-const namespace = helper.formClassName(prefix, '_');
+const name = utils.formClassName(prefix, ' ');
+const namespace = utils.formClassName(prefix, '_');
 
 // Replace prefix in namespace and plugin header.
 files.forEach((file) => {
-  helper.replaceInFile(file, {
+  utils.replaceInFile(file, {
     'Plugin Name: KWIO': 'Plugin Name: ' + name,
     'namespace KWIO': 'namespace ' + namespace,
     'KWIO\\\\Gutenberg_Blocks': namespace + '\\\\Gutenberg_Blocks'
@@ -42,8 +42,8 @@ files.forEach((file) => {
 // Rename plugin folder.
 fs.renameSync(pluginPath, newPluginPath);
 
-console.log(helper.successMessage('The new prefix has been applied successfully.'));
-console.log(helper.infoMessage('The new plugin name is', name + ' Gutenberg Block'));
-console.log(helper.infoMessage('The new namespace is', namespace + '/Gutenberg_Blocks'));
-console.log(helper.infoMessage('The new path is', newPluginPath));
-console.log(helper.infoMessage('To use autoloading with the updated namespace you probably need to run', 'composer dump-autoload'));
+console.log(utils.successMessage('The new prefix has been applied successfully.'));
+console.log(utils.infoMessage('The new plugin name is', name + ' Gutenberg Block'));
+console.log(utils.infoMessage('The new namespace is', namespace + '/Gutenberg_Blocks'));
+console.log(utils.infoMessage('The new path is', newPluginPath));
+console.log(utils.infoMessage('To use autoloading with the updated namespace you probably need to run', 'composer dump-autoload'));

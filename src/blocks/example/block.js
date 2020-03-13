@@ -8,7 +8,7 @@ const { RichText } = wp.editor;
 const { TextControl } = wp.components;
 
 // Local dependencies.
-import withWordLimit from '../../components/with-word-limit';
+import withWordLimit from '../../components/withWordLimit';
 import './style.scss';
 
 export default {
@@ -30,12 +30,12 @@ export default {
 
   edit({ attributes, setAttributes, className, isSelected }) {
     const { headline, text, author } = attributes;
-    //const Headline = withWordLimit({ limit: 1 })(RichText);
+    const Headline = withWordLimit({ limit: 1 })(RichText);
     const bem = new BEMHelper(className.split(' ')[0]);
 
     return (
       <div className={ className }>
-        <RichText
+        <Headline
           tagName="h2"
           className={ bem('content') }
           format="string"

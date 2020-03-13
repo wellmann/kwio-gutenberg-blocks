@@ -6,7 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // Local dependencies.
 const pkg = require('./package.json');
-const helper = require('./tasks/helper');
+const utils = require('./tasks/utils');
 
 let entries = { 'editor': './src/blocks.js' };
 const { themeAssets, themeScssIncludes } = pkg.config;
@@ -27,11 +27,11 @@ const cssLoaderOptions = {
       options: {
         sassOptions: {
           includePaths: [
-            helper.getPluginPath() + '/src',
-            helper.getTemplatePath() + themeScssIncludes
+            utils.getPluginPath() + '/src',
+            utils.getTemplatePath() + themeScssIncludes
           ]
         },
-        prependData: `$assets-path: "../../../../themes/${helper.getThemeName() + themeAssets}";`,
+        prependData: `$assets-path: "../../../../themes/${utils.getThemeName() + themeAssets}";`,
         sourceMap: true
       }
     }

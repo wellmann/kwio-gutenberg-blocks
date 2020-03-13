@@ -10,16 +10,16 @@
 const fs = require('fs');
 
 // Local dependencies.
-const helper = require('./helper');
+const utils = require('./utils');
 
 if (!process.argv[2]) {
-  console.log(helper.errorMessage('Please specify the blocks name.'));
+  console.log(utils.errorMessage('Please specify the blocks name.'));
   process.exit(1);
 }
 
 const blocksDir = '/src/blocks';
 const blockName = process.argv[2];
-const blockDir = helper.getPluginPath() + blocksDir + '/' + blockName;
+const blockDir = utils.getPluginPath() + blocksDir + '/' + blockName;
 const files = [
   'block.js',
   'block.php',
@@ -31,20 +31,20 @@ const files = [
 
 // Create block folder.
 if (fs.existsSync(blockDir)) {
-  console.log(helper.errorMessage('This block already exists.'));
+  console.log(utils.errorMessage('This block already exists.'));
   process.exit(1);
 }
 fs.mkdirSync(blockDir);
 
 // Create dummy files.
 files.forEach((file) => {
-  helper.copyAndReplace(file, blockDir, {
-    '<% TITLE_JS %>': helper.formClassName(blockName, ' '),
-    '<% NAMESPACE_PHP %>;': helper.getNamespace(),
-    '<% CLASS_NAME_PHP %>': helper.formClassName(blockName, '_'),
+  utils.copyAndReplace(file, blockDir, {
+    '<% TITLE_JS %>': utils.formClassName(blockName, ' '),
+    '<% NAMESPACE_PHP %>;': utils.getNamespace(),
+    '<% CLASS_NAME_PHP %>': utils.formClassName(blockName, '_'),
     '<% CLASS_NAME_CSS %>': 'block-' + blockName
   });
 });
 
-console.log(helper.successMessage('Block has been successfully created.'));
-console.log(helper.infoMessage('Block has been created at', blockDir));
+console.log(utils.successMessage('Block has been successfully created.'));
+console.log(utils.infoMessage('Block has been created at', blockDir));

@@ -1,8 +1,3 @@
-//
-// Hooks loader.
-//
+const importAll = (r) => r.keys().forEach(r);
 
-import './anchor';
-import './block-category';
-import './default-class-name';
-import './device-visibility';
+importAll(require.context('./', true, /(?!index)\.js$/));
