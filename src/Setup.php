@@ -18,7 +18,7 @@ final class Setup {
         'core/video',
         'core/table',
         'core/code',
-        'core/freeform',
+        'core/paragraph',
         'core/column',
         'core/columns',
         'core/group',
