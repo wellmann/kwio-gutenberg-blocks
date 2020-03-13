@@ -1,3 +1,4 @@
-const importAll = (r) => r.keys().forEach(r);
+// Local dependencies.
+import { importAll } from './utils';
 
 importAll(require.context('./blocks', true, /script\.js$/));

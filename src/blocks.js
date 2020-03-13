@@ -3,8 +3,10 @@ const { serverSideRender: ServerSideRender } = wp;
 const { registerBlockType } = wp.blocks;
 
 // Local dependencies.
-import './hooks';
+import { importAll } from './utils';
 import './editor.scss';
+
+importAll(require.context('./hooks', true, /\.js$/));
 
 const requireContext = require.context('./blocks', true, /block\.js$/);
 const defaultSettings = {
