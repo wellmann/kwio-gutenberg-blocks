@@ -31,7 +31,7 @@ final class Assets {
         $paths = glob(DIR_PATH . "dist/{$filename}.*.{$type}");
         $path = isset($paths[0]) ? $paths[0] : '';
         $handle = PREFIX . '-' . $filename;
-        $src = DIR_URL . ltrim($path, DIR_PATH);
+        $src = DIR_URL . str_replace(DIR_PATH, '', $path);
         $media = $filename === 'blocks' ? 'nonblocking' : 'all';
         $block_data = Block_Data::get_instance();
         $block_data->set_context($filename === 'blocks' ? 'frontend' : $filename);
