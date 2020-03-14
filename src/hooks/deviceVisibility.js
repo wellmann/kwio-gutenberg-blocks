@@ -1,9 +1,8 @@
 // WordPress dependencies.
-const { Fragment } = wp.element;
 const { hasBlockSupport } = wp.blocks;
 const { createHigherOrderComponent } = wp.compose;
-const { InspectorAdvancedControls } = wp.editor;
-const { CheckboxControl } = wp.components;
+const { InspectorAdvancedControls } = wp.blockEditor;
+const { ToggleControl } = wp.components;
 const { __ } = wp.i18n;
 const { addFilter } = wp.hooks;
 
@@ -17,7 +16,7 @@ const { addFilter } = wp.hooks;
  */
 export function addAttribute(settings) {
   const hasSupport = hasBlockSupport(settings, 'deviceVisibility');
-  const isOwnBlock = settings.name.includes(__PREFIX__ + '/');
+  const isOwnBlock = settings.name.indexOf(__PREFIX__ + '/') >= 0;
 
   if (hasSupport || isOwnBlock) {
     settings.attributes = {
@@ -49,27 +48,27 @@ export const withInspectorControl = createHigherOrderComponent((BlockEdit) => {
   return (props) => {
     const { name, isSelected, setAttributes } = props;
     const hasSupport = hasBlockSupport(name, 'deviceVisibility');
-    const isOwnBlock = name.includes(__PREFIX__ + '/');
+    const isOwnBlock = name.indexOf(__PREFIX__ + '/') >= 0;
     const { hideMobile, hideDesktop } = props.attributes;
 
     if ((hasSupport || isOwnBlock) && isSelected) {
       return (
-        <Fragment>
+        <>
           <BlockEdit { ...props } />
           <InspectorAdvancedControls>
-            <CheckboxControl
-              heading={ __('Hide on...', __TEXTDOMAIN__) }
+            <p>{ __('Hide on...', __TEXTDOMAIN__) }</p>
+            <ToggleControl
               label={ __('Mobile', __TEXTDOMAIN__) }
               checked={ hideMobile }
-              onChange={ (value) => setAttributes({ hideMobile: value }) }
+              onChange={ (hideMobile) => setAttributes({ hideMobile }) }
             />
-            <CheckboxControl
+            <ToggleControl
               label={ __('Desktop', __TEXTDOMAIN__) }
               checked={ hideDesktop }
-              onChange={ (value) => setAttributes({ hideDesktop: value }) }
+              onChange={ (hideMobile) => setAttributes({ hideMobile }) }
             />
           </InspectorAdvancedControls>
-        </Fragment>
+        </>
       );
     }
 

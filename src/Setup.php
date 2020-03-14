@@ -22,7 +22,6 @@ final class Setup {
         'core/column',
         'core/columns',
         'core/group',
-        'core/button',
         'core/shortcode'
     ];
     const BLOCKS_DIR = DIR_PATH . 'src/blocks';

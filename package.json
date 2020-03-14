@@ -25,25 +25,22 @@
   },
   "lint-staged": {
     "*.scss": [
-      "suppress-exit-code stylelint --fix",
-      "git add"
+      "suppress-exit-code stylelint --fix"
     ],
     "*.js": [
-      "suppress-exit-code eslint --fix",
-      "git add"
+      "suppress-exit-code eslint --fix"
     ],
     "*.php": [
-      "suppress-exit-code ./vendor/bin/phpcs",
-      "git add"
+      "suppress-exit-code ./vendor/bin/phpcs"
     ]
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.6",
+    "@babel/core": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-transform-react-jsx": "^7.8.3",
-    "@babel/preset-env": "^7.8.6",
+    "@babel/preset-env": "^7.8.7",
     "@wordpress/babel-plugin-makepot": "^2.1.3",
     "autoprefixer": "^9.7.4",
     "babel-eslint": "^10.1.0",
@@ -55,7 +52,7 @@
     "css-loader": "^3.4.2",
     "eslint": "^5.16.0",
     "eslint-config-wordpress": "^2.0.0",
-    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react": "^7.19.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "glob": "^7.1.6",
     "husky": "^1.3.1",
@@ -65,9 +62,8 @@
     "sass-loader": "^8.0.2",
     "stylelint": "^9.10.1",
     "suppress-exit-code": "^0.1.0",
-    "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11",
-    "word-count": "^0.2.2"
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {}
 }

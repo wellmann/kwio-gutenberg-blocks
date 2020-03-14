@@ -1,10 +1,8 @@
-// External dependencies.
-import wordCount from 'word-count';
-
 // WordPress dependencies.
 const { withNotices } = wp.components;
 const { createHigherOrderComponent } = wp.compose;
 const { Component, Fragment, forwardRef } = wp.element;
+const { count } = wp.wordcount;
 
 /**
  * A Higher Order Component used to set a word limit for input components.
@@ -22,7 +20,7 @@ const withWordLimit = ({ limit, threshold }) => createHigherOrderComponent((Wrap
       console.log('onChange');
       threshold = typeof threshold === 'undefined' ? 2 : threshold;
       const text = typeof eventOrvalue === Object ? event.target.value : eventOrvalue;
-      const countThreshold = wordCount(text) + threshold;
+      const countThreshold = count(text, 'words') + threshold;
 
       console.log(countThreshold);
       console.log(limit);

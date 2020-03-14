@@ -4,7 +4,7 @@ import BEMHelper from 'react-bem-helper';
 
 // WordPress dependencies.
 const { __ } = wp.i18n;
-const { RichText } = wp.editor;
+const { RichText } = wp.blockEditor;
 const { TextControl } = wp.components;
 
 // Local dependencies.

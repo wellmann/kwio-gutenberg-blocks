@@ -1,9 +1,9 @@
 'use strict';
 
 // Local dependencies.
-const helper = require('./tasks/helper');
+const utils = require('./tasks/utils');
 
-const prefix = helper.getPrefix().toLowerCase();
+const prefix = utils.getPrefix().toLowerCase();
 const textdomain = prefix + '-gutenberg-blocks';
 
 module.exports = {
@@ -17,7 +17,12 @@ module.exports = {
     ],
     ['@babel/plugin-proposal-class-properties'],
     ['@babel/plugin-proposal-decorators', { legacy: true }],
-    ['@babel/transform-react-jsx', { pragma: 'wp.element.createElement' }],
+    [
+      '@babel/transform-react-jsx', {
+        pragma: 'wp.element.createElement',
+        pragmaFrag: 'wp.element.Fragment'
+      }
+    ],
     ['@wordpress/babel-plugin-makepot', { output: `lang/${textdomain}.pot` }]
   ]
 };

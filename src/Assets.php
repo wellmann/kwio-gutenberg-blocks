@@ -11,7 +11,8 @@ final class Assets {
         $self = new self();
 
         add_action('enqueue_block_editor_assets', [$self, 'enqueue_editor_assets']);
-        add_action('enqueue_block_assets', [$self, 'enqueue_front_end_assets']);
+        add_action('wp_enqueue_scripts', [$self, 'enqueue_front_end_assets']);
+        add_action('enqueue_block_assets', [$self, 'enqueue_assets']);
     }
 
     public function enqueue_editor_assets(): void {
@@ -20,8 +21,11 @@ final class Assets {
     }
 
     public function enqueue_front_end_assets(): void {
-        $this->enqueue('blocks', 'css');
         $this->enqueue('blocks', 'js');
+    }
+
+    public function enqueue_assets(): void {
+        $this->enqueue('blocks', 'css');
     }
 
     /**
@@ -32,7 +36,7 @@ final class Assets {
         $path = isset($paths[0]) ? $paths[0] : '';
         $handle = PREFIX . '-' . $filename;
         $src = DIR_URL . str_replace(DIR_PATH, '', $path);
-        $media = $filename === 'blocks' ? 'nonblocking' : 'all';
+        $media = $filename === 'blocks' && !is_admin() ? 'nonblocking' : 'all';
         $block_data = Block_Data::get_instance();
         $block_data->set_context($filename === 'blocks' ? 'frontend' : $filename);
 
@@ -48,14 +52,14 @@ final class Assets {
             wp_enqueue_style($handle, $src, $dependencies, null, $media);
         }
 
-        if ($filename === 'editor') {
+        if ($filename === 'editor' && $type === 'js') {
             wp_localize_script($handle, 'blockOptions', [
                 'defaultBlocks' => Setup::DEFAULT_BLOCKS,
                 'data' => $block_data->get_all()
             ]);
         }
 
-        if ($filename === 'blocks' && !is_admin()) {
+        if ($filename === 'blocks') {
             if (!empty($block_data->get_all())) {
                 wp_localize_script($handle, 'blockData', $block_data->get_all());
             }

@@ -1,2 +1,1 @@
-const { blockData } = window;
-const data = blockData['block-example'];
+const data = window.blockData['block-example'];
