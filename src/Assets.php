@@ -13,6 +13,7 @@ final class Assets {
         add_action('enqueue_block_editor_assets', [$self, 'enqueue_editor_assets']);
         add_action('wp_enqueue_scripts', [$self, 'enqueue_front_end_assets']);
         add_action('enqueue_block_assets', [$self, 'enqueue_assets']);
+        add_filter('admin_body_class', [$self, 'admin_body_class']);
     }
 
     public function enqueue_editor_assets(): void {
@@ -26,6 +27,28 @@ final class Assets {
 
     public function enqueue_assets(): void {
         $this->enqueue('blocks', 'css');
+    }
+
+    /**
+     * Add class so we can style the editor more specifically (e.g. for front page).
+     */
+    public function admin_body_class(string $classes_string): string {
+        if (!isset($_GET['post'])) {
+            return $classes_string;
+        }
+
+        $classes = explode(' ', $classes_string);
+
+        if ($_GET['post'] === get_option('page_on_front')) {
+            $classes[] = 'is-front-page';
+        }
+
+        if ($_GET['post'] === get_option('page_for_posts')) {
+            $classes[] = 'is-home';
+        }
+
+
+        return implode(' ', $classes);
     }
 
     /**
