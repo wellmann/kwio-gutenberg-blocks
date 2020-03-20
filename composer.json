@@ -10,8 +10,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "KWIO\\Gutenberg_Blocks\\": "src/"
-        }
+            "KWIO\\Gutenberg_Blocks\\": "lib/"
+        },
+        "files": [
+          "lib/utils.php",
+          "lib/hooks/assets.php",
+          "lib/hooks/block.php",
+          "lib/hooks/twig.php"
+        ]
     },
     "require": {
         "timber/timber": "^1.15"

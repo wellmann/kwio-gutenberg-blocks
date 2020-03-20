@@ -7,7 +7,7 @@ namespace KWIO\Gutenberg_Blocks;
  * Plugin Name: KWIO Gutenberg Blocks
  * Plugin URI: https://github.com/wellmann/kwio-gutenberg-blocks
  * Description: Foundation to develop custom blocks for Gutenberg.
- * Version: 3.0.3
+ * Version: 3.1.3
  * Author: Kevin Wellmann
  * License: GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -27,7 +27,6 @@ define(__NAMESPACE__ . '\\PREFIX', sanitize_title(explode('\\', __NAMESPACE__)[0
 
 if (file_exists(DIR_PATH . 'vendor/autoload.php')) {
     include_once DIR_PATH . 'vendor/autoload.php';
+} else {
+    throw new \Exception('You need to run "composer update" in the following directory: ' . DIR_PATH . '.');
 }
-
-Setup::register();
-Assets::register();
