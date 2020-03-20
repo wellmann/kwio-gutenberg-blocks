@@ -1,59 +1,71 @@
-// External dependencies.
-import classNames from 'classnames';
-import BEMHelper from 'react-bem-helper';
-
 // WordPress dependencies.
 const { __ } = wp.i18n;
-const { RichText } = wp.blockEditor;
-const { TextControl } = wp.components;
+const { URLInputButton } = wp.blockEditor;
+const {
+  DatePicker,
+  DateTimePicker,
+  FormTokenField,
+  TimePicker,
+  PanelBody,
+  SelectControl,
+  TextControl,
+  TextareaControl,
+  ToggleControl
+} = wp.components;
 
 // Local dependencies.
-import withWordLimit from '../../components/withWordLimit';
+import {
+  MediaPlaceholder,
+  RichText,
+  InspectorControls,
+  withWordLimit
+} from 'components';
+import attributes from './attributes.json';
 import './style.scss';
 
 export default {
-  title: __('Example Block', __TEXTDOMAIN__),
-  description: __('This is the description of the Example Block.', __TEXTDOMAIN__),
+  title: 'Example Block',
+  description: 'This is the description of the Example Block.',
   icon: 'welcome-learn-more',
-  attributes: {
-    headline: { type: 'string' },
-    text: {
-      type: 'string',
-      default: 'default text'
-    },
-    author: { type: 'string' }
-  },
+  attributes,
   supports: {
     align: ['full'],
     anchor: true
   },
-
-  edit({ attributes, setAttributes, className, isSelected }) {
-    const { headline, text, author } = attributes;
-    const Headline = withWordLimit({ limit: 1 })(RichText);
-    const bem = new BEMHelper(className.split(' ')[0]);
+  edit() {
+    //const Headline = withWordLimit({ limit: 1 })(RichText);
 
     return (
-      <div className={ className }>
-        <Headline
-          tagName="h2"
-          className={ bem('content') }
-          format="string"
-          value={ headline }
-          placeholder="Headline"
-          onChange={ (value) => setAttributes({ headline: value }) }
-        />
+      <>
+        <MediaPlaceholder name="image" />
         <RichText
-          format="string"
-          value={ text }
-          onChange={ (value) => setAttributes({ text: value }) }
+          name="headline"
+          tagName="h2"
+          placeholder="Headline"
         />
-        <TextControl
-          label={ __('Text', __TEXTDOMAIN__) }
-          value={ author }
-          onChange={ (event) => setAttributes({ author: event.target.value }) }
+        <RichText name="text" />
+        <RichText
+          name="buttonText"
+          tagName="button"
         />
-      </div>
+        <URLInputButton/>
+        <InspectorControls>
+          <PanelBody title={ __('Settings') }>
+            {/* <FormTokenField
+              value={ '' }
+              suggestions={ ['suggestions', 'ghgkg'] }
+              onChange={ tokens => setAttributes( { tokens } ) }
+              placeholder="Type a continent"
+            /> */}
+            <TextControl
+              label="Author"
+              name="author" />
+            { /* <DateTimePicker
+              currentDate={ new Date() }
+              onChange={ () => setAttributes( { date } ) } /> */}
+          </PanelBody>
+        </InspectorControls>
+      </>
     );
   }
 };

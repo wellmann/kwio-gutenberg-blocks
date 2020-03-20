@@ -1,9 +1,30 @@
 # Gutenberg Blocks
 
-WordPress plugin to facilitate the development of Gutenberg blocks. Includes 1 examplary implementations.
+WordPress plugin to facilitate the development of Gutenberg blocks.
 
-The most common components and their use, that you will need during development, are shown in the example block.  
-For more components refer to the handbook and the [@wordpress/components](https://wordpress.org/gutenberg/handbook/designers-developers/developers/packages/packages-components/) package.
+### Features
+
+* auto-registration of blocks
+*  only attributes are saved in post content - no markup
+* no need to pass `value`,`setAttributes` and `className` to each component when using our custom wrapper components
+* class names follow the BEM pattern
+* if no edit function is present `ServerSideRender` is used by default
+* default example attributes
+
+#### Use wrapper components
+
+Import `InspectorControl`, `MediaPlaceholderWrapper` and `RichTextWrapper` from `components` instead of `wp.blockEditor` to write less repetitive code.  
+You only need to add a `name` prop which corresponds to the attribute.
+
+```
+ <RichText
+    value={ attributes.text }
+    onChange={ (text) => setAttributes({ text }) } />
+```
+vs.
+```
+ <RichText name="text" />
+```
 
 ### Setup
 
@@ -29,6 +50,10 @@ A selected set of Gutenberg default modules are grouped into their own category 
 
 #### Anatomy of a block
 
+##### attributes.json *(optional)*
+
+* Should be used when default values for attributes are set, so that both JavaScript and PHP have access to them.
+
 ##### block.js
 
 * Exports an object with the properties of the [block configuration object](https://wordpress.org/gutenberg/handbook/designers-developers/developers/block-api/block-registration/).
@@ -37,7 +62,7 @@ A selected set of Gutenberg default modules are grouped into their own category 
 
 ##### block.php *(optional)*
 
-* Class that extends `Base_Block` and implements a custom render function. You can add additional classes to the wrapper element, add JSON data to the front end or set default values for the attributes. Should be used when dynamic data will be rendered.
+* Class that extends `Base_Block` and implements a custom render function. You can add additional classes to the wrapper element, add JSON data to the front end. Should be used when dynamic data will be rendered.
 
 ##### editor.scss *(optional)*
 

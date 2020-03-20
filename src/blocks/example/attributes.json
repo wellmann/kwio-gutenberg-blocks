@@ -1,0 +1,16 @@
+{
+  "image": { "type": "string" },
+  "headline": {
+    "type": "string",
+    "default": "Heading"
+  },
+  "text": {
+    "type": "string",
+    "default": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."
+  },
+  "buttonText": {
+    "type": "string",
+    "default": "Read more"
+  },
+  "author": { "type": "string" }
+}

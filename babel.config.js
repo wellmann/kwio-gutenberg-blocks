@@ -9,6 +9,7 @@ const textdomain = prefix + '-gutenberg-blocks';
 module.exports = {
   presets: ['@babel/preset-env'],
   plugins: [
+    ['module-resolver', { 'root': ['./src/'] }],
     [
       'inline-replace-variables', {
         __TEXTDOMAIN__: textdomain,

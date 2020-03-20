@@ -25,7 +25,17 @@ class Base_Block {
     }
 
     public function get_attributes(): array {
-        return [];
+        $attributes_json = $this->dir_path . '/attributes.json';
+        if (!is_readable($attributes_json)) {
+            return [];
+        }
+
+        $attributes = file_get_contents($attributes_json);
+        if (!json_decode($attributes)) {
+            return [];
+        }
+
+        return json_decode($attributes, true);
     }
 
     public function render(array $attributes, string $content): string {
