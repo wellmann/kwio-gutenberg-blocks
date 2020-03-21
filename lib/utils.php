@@ -18,6 +18,10 @@ function enqueue_asset(string $filename, string $type, array $dependencies = [])
         return;
     }
 
+    if (!function_exists(PREFIX . '\\WP_Defaults\\add_cache_busting_hash')) {
+        $media = 'all';
+    }
+
     if ($type === 'js') {
         wp_enqueue_script($handle, $src, $dependencies, null, true);
     }
