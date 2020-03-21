@@ -28,5 +28,22 @@ define(__NAMESPACE__ . '\\PREFIX', sanitize_title(explode('\\', __NAMESPACE__)[0
 if (file_exists(DIR_PATH . 'vendor/autoload.php')) {
     include_once DIR_PATH . 'vendor/autoload.php';
 } else {
-    throw new \Exception('You need to run "composer update" in the following directory: ' . DIR_PATH . '.');
+    throw new Exception('You need to run "composer update" in the following directory: ' . DIR_PATH . '.');
+}
+
+$lib_folder_path = DIR_PATH . '/lib';
+$lib_files =[
+    'utils.php',
+    'hooks/assets.php',
+    'hooks/block.php',
+    'hooks/twig.php'
+];
+
+foreach ($lib_files as $lib_file) {
+    $lib_file_path = "{$lib_folder_path}/{$lib_file}";
+    if (!file_exists($lib_file_path)) {
+        return;
+    }
+
+    include_once $lib_file_path;
 }
