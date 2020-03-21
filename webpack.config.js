@@ -10,8 +10,8 @@ const utils = require('./tasks/utils');
 
 let entries = { 'editor': './src/blocks.js' };
 const { themeAssets, themeScssIncludes } = pkg.config;
-const EditorCssPlugin = new ExtractTextPlugin({ filename: 'editor.[hash:8].css' });
-const BlockCssPlugin = new ExtractTextPlugin({ filename: 'blocks.[hash:8].css' });
+const EditorCssPlugin = new ExtractTextPlugin({ filename: 'editor.css' });
+const BlockCssPlugin = new ExtractTextPlugin({ filename: 'blocks.css' });
 const BlockCriticalCssPlugin = new ExtractTextPlugin({ filename: 'critical.css' });
 const cssLoaderOptions = {
   use: [
@@ -58,7 +58,7 @@ module.exports = {
     BlockCriticalCssPlugin
   ],
   output: {
-    filename: '[name].[contenthash:8].js',
+    filename: '[name].js',
     path: __dirname + '/dist'
   },
   module: {

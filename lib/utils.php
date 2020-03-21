@@ -6,28 +6,24 @@ namespace KWIO\Gutenberg_Blocks;
  * Enqueue asset based on file name and file type.
  */
 function enqueue_asset(string $filename, string $type, array $dependencies = []): void {
-    $paths = glob(DIR_PATH . "dist/{$filename}.*.{$type}");
-    $path = isset($paths[0]) ? $paths[0] : '';
+    $path = DIR_PATH . "dist/{$filename}.{$type}";
     $handle = PREFIX . '-' . $filename;
     $src = DIR_URL . str_replace(DIR_PATH, '', $path);
+    $ver_hash  = substr(md5(filemtime($path)), 0, 12);
     $media = $filename === 'blocks' && !is_admin() ? 'nonblocking' : 'all';
     $block_data = Block_Data::get_instance();
     $block_data->set_context($filename === 'blocks' ? 'frontend' : $filename);
-
-    if (empty($path)) {
-        return;
-    }
 
     if (!function_exists(PREFIX . '\\WP_Defaults\\add_cache_busting_hash')) {
         $media = 'all';
     }
 
     if ($type === 'js') {
-        wp_enqueue_script($handle, $src, $dependencies, null, true);
+        wp_enqueue_script($handle, $src, $dependencies, $ver_hash, true);
     }
 
     if ($type === 'css') {
-        wp_enqueue_style($handle, $src, $dependencies, null, $media);
+        wp_enqueue_style($handle, $src, $dependencies, $ver_hash, $media);
     }
 
     if ($filename === 'editor' && $type === 'js') {
