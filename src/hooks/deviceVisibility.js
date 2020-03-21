@@ -1,20 +1,16 @@
 // WordPress dependencies.
+const { addFilter } = wp.hooks;
 const { hasBlockSupport } = wp.blocks;
 const { createHigherOrderComponent } = wp.compose;
 const { InspectorAdvancedControls } = wp.blockEditor;
 const { ToggleControl } = wp.components;
 const { __ } = wp.i18n;
-const { addFilter } = wp.hooks;
 
 /**
  * Adds attributes to hide block on specified devices.
  * (All blocks of this plugin have this support option enabled by default.)
- *
- * @param {Object} settings Original block settings.
- *
- * @return {Object} Filtered block settings.
  */
-export function addAttribute(settings) {
+addFilter('blocks.registerBlockType', __PREFIX__ + '/device-visibility/attribute', (settings) => {
   const hasSupport = hasBlockSupport(settings, 'deviceVisibility');
   const isOwnBlock = settings.name.indexOf(__PREFIX__ + '/') >= 0;
 
@@ -33,16 +29,12 @@ export function addAttribute(settings) {
   }
 
   return settings;
-}
+});
 
 /**
  * Adds divice visibility opttons to inspector advanced control panel.
- *
- * @param {function|Component} BlockEdit Original component.
- *
- * @return {string} Wrapped component.
  */
-export const withInspectorControl = createHigherOrderComponent((BlockEdit) => {
+const withInspectorControl = createHigherOrderComponent((BlockEdit) => {
 
   // eslint-disable-next-line react/display-name
   return (props) => {
@@ -75,6 +67,4 @@ export const withInspectorControl = createHigherOrderComponent((BlockEdit) => {
     return <BlockEdit { ...props } />;
   };
 }, 'withInspectorControl');
-
-addFilter('blocks.registerBlockType', __PREFIX__ + '/device-visibility/attribute', addAttribute);
 addFilter('editor.BlockEdit', __PREFIX__ + '/editor/device-visibility/with-inspector-control', withInspectorControl);
