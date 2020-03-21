@@ -22,6 +22,30 @@ const defaultSettings = {
   }
 };
 
+/**
+ * Workaround until https://github.com/WordPress/gutenberg/issues/11763 is fixed.
+ */
+const convertToBem = (className) => {
+  let classNames = className.split(' ');
+  classNames = classNames.map((className) => {
+    if (className.indexOf('is-style-') !== -1) {
+      return className.replace('is-style-', classNames[0] + '--');
+    }
+
+    if (className.indexOf('has-background-color-') !== -1) {
+      return className.replace('has-background-color-', 'background-');
+    }
+
+    if (className.indexOf('has-text-color-') !== -1) {
+      return className.replace('has-text-color-', 'color-');
+    }
+
+    return className;
+  });
+
+  return classNames.join(' ');
+};
+
 requireContext.keys().forEach((key) => {
   let blockName = key.split('/')[1];
   let blockNamespace = __PREFIX__ + '/' + blockName;
@@ -49,10 +73,12 @@ requireContext.keys().forEach((key) => {
     ...{ example: { attributes: exampleAttributes } },
     ...{
       edit(props) {
+        const className = convertToBem(props.className);
+
         if (editFunction) {
           return (
             <EditContext.Provider value={ props }>
-              <div className={ props.className }>
+              <div className={ className }>
                 { editFunction(props) }
               </div>
             </EditContext.Provider>
@@ -63,7 +89,7 @@ requireContext.keys().forEach((key) => {
           <ServerSideRender
             block={ blockNamespace }
             attributes={ props.attributes }
-            className={ props.className }
+            className={ className }
           />
         );
       }

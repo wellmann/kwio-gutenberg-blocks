@@ -66,6 +66,7 @@ class Base_Block {
             return '';
         }
 
+        $this->tag_attr['class'] = $this->convert_to_bem($this->tag_attr['class']);
         $tag_attr_string = $this->to_tag_attr_string($this->tag_attr);
         $data = array_merge($this->data, $data);
         $data['post'] = new Post();
@@ -93,6 +94,27 @@ class Base_Block {
         unset($this->data[$attr]);
 
         return $value;
+    }
+
+    /**
+     * Workaround until https://github.com/WordPress/gutenberg/issues/11763 is fixed.
+     */
+    private function convert_to_bem(array $classnames): array {
+        return array_map(function (string $classname): string {
+            if (strpos($classname, 'is-style-') !== false) {
+                return str_replace('is-style-', $this->base_class . '--', $classname);
+            }
+
+            if (strpos($classname, 'has-background-color-') !== false) {
+                return str_replace('has-background-color-', 'background-', $classname);
+            }
+
+            if (strpos($classname, 'has-text-color-') !== false) {
+                return str_replace('has-text-color-', 'color-', $classname);
+            }
+
+            return $classname;
+        }, $classnames);
     }
 
     /**
