@@ -21,7 +21,7 @@ const deleteStyle = {
   borderRadius: 4
 };
 
-const MediaPlaceholderWrapper = ({ name, width = '100%', height = 250, ...props }) => {
+const MediaPlaceholderWrapper = ({ name, width = '100%', height, ...props }) => {
   const { attributes, setAttributes, className, isSelected } = useContext(EditContext);
   const value = attributes[name];
   const bem = new BEMHelper(className.split(' ')[0]);

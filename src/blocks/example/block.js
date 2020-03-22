@@ -1,23 +1,21 @@
 // WordPress dependencies.
-const { __ } = wp.i18n;
-const { URLInputButton } = wp.blockEditor;
 const {
-  DatePicker,
-  DateTimePicker,
   FormTokenField,
-  TimePicker,
   PanelBody,
   SelectControl,
   TextControl,
   TextareaControl,
   ToggleControl
 } = wp.components;
+const { __ } = wp.i18n;
 
 // Local dependencies.
 import {
+  DateTimePickerControl,
   MediaPlaceholder,
   RichText,
   InspectorControls,
+  URLControl,
   withWordLimit
 } from 'components';
 import attributes from './attributes.json';
@@ -37,7 +35,9 @@ export default {
 
     return (
       <>
-        <MediaPlaceholder name="image" />
+        <MediaPlaceholder
+          name="image"
+          height={ 250 } />
         <RichText
           name="headline"
           tagName="h2"
@@ -47,8 +47,8 @@ export default {
         <RichText
           name="buttonText"
           tagName="button"
+          className="button"
         />
-        <URLInputButton/>
         <InspectorControls>
           <PanelBody title={ __('Settings') }>
             {/* <FormTokenField
@@ -58,11 +58,28 @@ export default {
               placeholder="Type a continent"
             /> */}
             <TextControl
-              label="Author"
-              name="author" />
-            { /* <DateTimePicker
-              currentDate={ new Date() }
-              onChange={ () => setAttributes( { date } ) } /> */}
+              label="Text"
+              name="text" />
+            <URLControl name="url" />
+            <TextareaControl
+              label="Textarea"
+              name="Textarea" />
+            <ToggleControl
+              label="Toggle"
+              name="toggle" />
+            <SelectControl
+              label="Select"
+              name="select"
+              options={ [
+                { value: null, label: 'Select something', disabled: true },
+                { value: 'a', label: 'A' },
+                { value: 'b', label: 'B' },
+                { value: 'c', label: 'C' }
+              ] } />
+            <DateTimePickerControl
+              label="Date"
+              name="date"
+              time={ false } />
           </PanelBody>
         </InspectorControls>
       </>

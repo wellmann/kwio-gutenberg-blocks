@@ -26,9 +26,11 @@ const InspectorControlsWrapper = ({ children }) => {
       { recursiveMap(children, (child) => {
         if (child.props.hasOwnProperty('name')) {
           let name = child.props.name;
+          let value = attributes[name];
 
           return cloneElement(child, {
-            value: attributes[name],
+            value,
+            checked: value,
             onChange: (value) => setAttributes({ [name]: value })
           });
         }
