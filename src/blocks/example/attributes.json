@@ -1,5 +1,5 @@
 {
-  "image": { "type": "string" },
+  "image": { "type": "object" },
   "headline": {
     "type": "string",
     "default": "Heading"

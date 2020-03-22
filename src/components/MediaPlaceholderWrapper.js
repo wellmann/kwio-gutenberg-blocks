@@ -3,55 +3,71 @@ import BEMHelper from 'react-bem-helper';
 
 // WordPress dependencies.
 const { useContext } = wp.element;
-const { BlockControls, MediaPlaceholder, MediaUpload } = wp.blockEditor;
-const { Toolbar, IconButton, Icon, Path, SVG } = wp.components;
+const { MediaPlaceholder, MediaUpload } = wp.blockEditor;
+const { IconButton, Button, Icon } = wp.components;
 const { __ } = wp.i18n;
 
 // Local dependencies.
 import { EditContext } from 'components';
 
-const MediaPlaceholderWrapper = ({ name, ...props }) => {
-  const { attributes, setAttributes, className } = useContext(EditContext);
+const allowedTypes = ['image'];
+const deleteStyle = {
+  position: 'absolute',
+  top: 20,
+  right: 20,
+  padding: 2,
+  background: '#fff',
+  border: '1px solid rgba(66,88,99,.4)',
+  borderRadius: 4
+};
+
+const MediaPlaceholderWrapper = ({ name, width = '100%', height = 250, ...props }) => {
+  const { attributes, setAttributes, className, isSelected } = useContext(EditContext);
   const value = attributes[name];
   const bem = new BEMHelper(className.split(' ')[0]);
-  const onSelect = (media) => setAttributes({ [name]: media.url });
-  const allowedTypes = ['image'];
-  const icon = <SVG viewBox="0 0 20 20"><rect x="11" y="3" width="7" height="5" rx="1"></rect><rect x="2" y="12" width="7" height="5" rx="1"></rect><Path d="M13,12h1a3,3,0,0,1-3,3v2a5,5,0,0,0,5-5h1L15,9Z"></Path><Path d="M4,8H3l2,3L7,8H6A3,3,0,0,1,9,5V3A5,5,0,0,0,4,8Z"></Path></SVG>;
-
-  return (
-    <>
-      { value ? <img src={ value } /> : <MediaPlaceholder
-        { ...bem(name) }
-        icon={ <Icon icon="format-image" /> }
-        labels={ {
-          title: __('Image'),
-          instructions: __('Upload an image file or pick one from your media library.')
-        } }
-        onSelect={ onSelect }
-        accept="image/*"
-        allowedTypes={ allowedTypes }
-        value={ value }
-        { ...props }
-      /> }
-      <BlockControls>
-        <Toolbar>
-          <MediaUpload
-            onSelect={ onSelect }
-            allowedTypes={ allowedTypes }
-            value={ value }
-            render={ ({ open }) => (
-              <IconButton
-                className="components-toolbar__control"
-                label={ __('Edit image') }
-                icon={ icon }
-                onClick={ open }
-              />
-            ) }
-          />
-        </Toolbar>
-      </BlockControls>
-    </>
+  const onSelect = ({ id, url }) => setAttributes({ [name]: { id, url } });
+  const onDelete = (event) => {
+    event.stopPropagation();
+    setAttributes({ [name]: null });
+  };
+  const DeleteButton = () => (
+    <IconButton
+      icon="no-alt"
+      style={ deleteStyle }
+      onClick={ onDelete }
+      label={ __('Remove image') }
+    />
   );
+  const previewStyle = {
+    width,
+    height,
+    backgroundImage: value ? `url(${value.url})` : null,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover'
+  };
+  const Preview = () => (
+    <MediaUpload
+      onSelect={ onSelect }
+      allowedTypes={ allowedTypes }
+      value={ value.id }
+      render={ ({ open }) => (
+        isSelected ? <Button
+          onClick={ open }
+          { ...bem(name) }
+          style={ previewStyle }><DeleteButton /></Button> : <div { ...bem(name) } style={ previewStyle } />
+      ) }
+    />
+  );
+
+  return value ? <Preview /> : <MediaPlaceholder
+    { ...bem(name) }
+    icon={ <Icon icon="format-image" /> }
+    labels={ { title: __('Image'), instructions: '' } }
+    onSelect={ onSelect }
+    accept="image/*"
+    allowedTypes={ allowedTypes }
+    { ...props }
+  />;
 };
 
 export default MediaPlaceholderWrapper;
