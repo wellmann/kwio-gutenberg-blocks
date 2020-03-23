@@ -7,6 +7,10 @@ namespace KWIO\Gutenberg_Blocks;
  */
 function enqueue_asset(string $filename, string $type, array $dependencies = []): void {
     $path = DIR_PATH . "dist/{$filename}.{$type}";
+    if (!is_readable($path)) {
+        return;
+    }
+
     $handle = PREFIX . '-' . $filename;
     $src = DIR_URL . str_replace(DIR_PATH, '', $path);
     $ver_hash  = substr(md5(filemtime($path)), 0, 12);
