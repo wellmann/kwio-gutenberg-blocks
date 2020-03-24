@@ -1,5 +1,6 @@
 export { default as DateTimePickerControl } from './DateTimePickerControl';
 export { default as EditContext } from './EditContext';
+export { default as getEdit } from './EditWrapper';
 export { default as InspectorControls } from './InspectorControlsWrapper';
 export { default as MediaPlaceholder } from './MediaPlaceholderWrapper';
 export { default as RichText } from './RichTextWrapper';
