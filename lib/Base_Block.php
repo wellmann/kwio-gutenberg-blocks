@@ -66,8 +66,8 @@ class Base_Block {
             return '';
         }
 
-        $this->tag_attr['class'] = $this->convert_to_bem($this->tag_attr['class']);
-        $tag_attr_string = $this->to_tag_attr_string($this->tag_attr);
+        $this->tag_attr['class'] = convert_to_bem($this->tag_attr['class'], $this->base_class);
+        $tag_attr_string = to_tag_attr_string($this->tag_attr);
         $data = array_merge($this->data, $data);
         $data['post'] = new Post();
         $block_html = Timber::compile($file, $data);
@@ -94,39 +94,5 @@ class Base_Block {
         unset($this->data[$attr]);
 
         return $value;
-    }
-
-    /**
-     * Workaround until https://github.com/WordPress/gutenberg/issues/11763 is fixed.
-     */
-    private function convert_to_bem(array $classnames): array {
-        return array_map(function (string $classname): string {
-            if (strpos($classname, 'is-style-') !== false) {
-                return str_replace('is-style-', $this->base_class . '--', $classname);
-            }
-
-            return $classname;
-        }, $classnames);
-    }
-
-    /**
-     * Convert key-value pairs to string of HTML attributes.
-     */
-    private function to_tag_attr_string(array $array): string {
-        $tag_attr_string = '';
-        foreach ($array as $key => $value) {
-            if (empty($key)) {
-                continue;
-            }
-
-            if (is_array($value)) {
-                $value = implode(' ', $value);
-            }
-
-            $value = esc_attr($value);
-            $tag_attr_string .= " {$key}=\"{$value}\"";
-        }
-
-        return $tag_attr_string;
     }
 }

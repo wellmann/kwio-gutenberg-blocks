@@ -50,3 +50,37 @@ function enqueue_asset(string $filename, string $type, array $dependencies = [])
         }
     }
 }
+
+/**
+ * Workaround until https://github.com/WordPress/gutenberg/issues/11763 is fixed.
+ */
+function convert_to_bem(array $classnames, string $base_class): array {
+    return array_map(function (string $classname) use ($base_class): string {
+        if (strpos($classname, 'is-style-') !== false) {
+            return str_replace('is-style-', $base_class . '--', $classname);
+        }
+
+        return $classname;
+    }, $classnames);
+}
+
+/**
+ * Convert key-value pairs to string of HTML attributes.
+ */
+function to_tag_attr_string(array $array): string {
+    $tag_attr_string = '';
+    foreach ($array as $key => $value) {
+        if (empty($key)) {
+            continue;
+        }
+
+        if (is_array($value)) {
+            $value = implode(' ', $value);
+        }
+
+        $value = esc_attr($value);
+        $tag_attr_string .= " {$key}=\"{$value}\"";
+    }
+
+    return $tag_attr_string;
+}
