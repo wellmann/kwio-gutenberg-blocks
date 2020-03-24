@@ -50,7 +50,7 @@ requireContext.keys().forEach((key) => {
   let blockName = key.split('/')[1];
   let blockNamespace = __PREFIX__ + '/' + blockName;
   let { default: blockSettings } = requireContext(key);
-  let attributes = blockSettings.attributes;
+  let attributes = blockSettings.attributes || {};
   let exampleAttributes = Object.keys(attributes).map((key) => {
     let attribute = attributes[key];
 
