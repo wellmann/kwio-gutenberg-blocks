@@ -105,14 +105,6 @@ class Base_Block {
                 return str_replace('is-style-', $this->base_class . '--', $classname);
             }
 
-            if (strpos($classname, 'has-background-color-') !== false) {
-                return str_replace('has-background-color-', 'background-', $classname);
-            }
-
-            if (strpos($classname, 'has-text-color-') !== false) {
-                return str_replace('has-text-color-', 'color-', $classname);
-            }
-
             return $classname;
         }, $classnames);
     }

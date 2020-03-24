@@ -32,14 +32,6 @@ const convertToBem = (className) => {
       return className.replace('is-style-', classNames[0] + '--');
     }
 
-    if (className.indexOf('has-background-color-') !== -1) {
-      return className.replace('has-background-color-', 'background-');
-    }
-
-    if (className.indexOf('has-text-color-') !== -1) {
-      return className.replace('has-text-color-', 'color-');
-    }
-
     return className;
   });
 
