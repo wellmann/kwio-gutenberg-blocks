@@ -1,5 +1,6 @@
 // WordPress dependencies.
-const { serverSideRender: ServerSideRender } = wp;
+const { withDispatch } = wp.data;
+const { tokenList: TokenList, serverSideRender: ServerSideRender } = wp;
 const { InnerBlocks } = wp.blockEditor;
 const { registerBlockType } = wp.blocks;
 
@@ -58,13 +59,23 @@ requireContext.keys().forEach((key) => {
       return { [key]: 'Lorem ipsum dolor' };
     }
   });
+  let additionalClassNames = blockSettings.additionalClassNames || [];
+  delete blockSettings.additionalClassNames;
   let editFunction = blockSettings.edit;
   delete blockSettings.edit;
   let settings = {
     ...defaultSettings,
     ...{ example: { attributes: exampleAttributes } },
     ...{
-      edit(props) {
+      edit: withDispatch(( dispatch, { className, clientId } ) => {
+        if (additionalClassNames) {
+          const list = new TokenList(className);
+          list.remove(className.split(' ')[0]); // Remove blocks default class name.
+          additionalClassNames.map((className) => list.add(className));
+
+          dispatch('core/block-editor').updateBlockAttributes(clientId, { className: list.value });
+        }
+      })((props) => {
         const className = convertToBem(props.className);
 
         if (editFunction) {
@@ -78,6 +89,10 @@ requireContext.keys().forEach((key) => {
         }
 
         const { attributes } = props;
+
+        if (attributes.hasOwnProperty('className')) {
+          delete attributes.className;
+        }
 
         if (attributes.hasOwnProperty('hideMobile')) {
           delete attributes.hideMobile;
@@ -94,7 +109,7 @@ requireContext.keys().forEach((key) => {
             className={ className }
           />
         );
-      }
+      })
     },
     ...blockSettings
   };
