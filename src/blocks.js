@@ -77,6 +77,16 @@ requireContext.keys().forEach((key) => {
           );
         }
 
+        const { attributes } = props;
+
+        if (attributes.hasOwnProperty('hideMobile')) {
+          delete attributes.hideMobile;
+        }
+
+        if (attributes.hasOwnProperty('hideDesktop')) {
+          delete attributes.hideDesktop;
+        }
+
         return (
           <ServerSideRender
             block={ blockNamespace }
