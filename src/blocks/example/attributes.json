@@ -12,5 +12,10 @@
     "type": "string",
     "default": "Read more"
   },
-  "author": { "type": "string" }
+  "url": { "type": "string" },
+  "textarea": { "type": "string" },
+  "toggle": { "type": "boolean" },
+  "file": { "type": "object" },
+  "select": { "type": "string" },
+  "date": { "type": "string" }
 }

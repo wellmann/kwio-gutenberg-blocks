@@ -1,38 +1,54 @@
 // WordPress dependencies.
-const { __ } = wp.i18n;
-const { useState } = wp.element;
-const { BaseControl, Button, DateTimePicker, DatePicker, TimePicker } = wp.components;
+const { useContext } = wp.element;
+const { dateI18n, __experimentalGetSettings } = wp.date;
+const { BaseControl PanelRow, Dropdown, Button, DateTimePicker, DatePicker, TimePicker } = wp.components;
 
-const DateTimePickerControl = ({ label, time = true, date = true, ...props }) => {
-  const [isVisible, toggle] = useState(false);
+// Local dependencies.
+import { EditContext } from 'components';
+
+const DateTimePickerControl = ({ name, label, time = true, date = true, ...props }) => {
+  const { attributes } = useContext(EditContext);
+  const settings = __experimentalGetSettings();
+  const value = attributes[name];
   let Picker = DateTimePicker;
+  let format = `${settings.formats.date} ${settings.formats.time}`;
 
   if (date && !time) {
     Picker = DatePicker;
+    format = settings.formats.date;
   }
 
   if (time && !date) {
     Picker = TimePicker;
+    format = settings.formats.time;
   }
 
   return (
-    <>
-      <BaseControl label={ label + ':' }>
-        { ' ' }<Button
-          onClick={ () => toggle((isVisible) => !isVisible) }
-          isSecondary
-          isSmall
-          isPressed={ isVisible }
-          focus={ isVisible }
-        >
-          { __('Display date') }
-        </Button>
-      </BaseControl>
-      { isVisible && <Picker
-        currentDate={ new Date() }
-        { ...props }
-      /> }
-    </>
+    <BaseControl>
+      <PanelRow className="edit-post-post-schedule">
+        <span>{ label }</span>
+        <Dropdown
+          position="bottom left"
+          contentClassName="edit-post-post-schedule__dialog"
+          renderToggle={ ( { onToggle, isOpen } ) => (
+          <>
+            <Button
+              className="edit-post-post-schedule__toggle"
+              onClick={ onToggle }
+              aria-expanded={ isOpen }
+              isLink
+            >
+              { dateI18n(format, value || new Date())}
+            </Button>
+          </>
+          ) }
+          renderContent={ () => <Picker
+            currentDate={ value || new Date() }
+            { ...props }
+          /> }
+        />
+      </PanelRow>
+    </BaseControl>
   );
 };
 

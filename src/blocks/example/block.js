@@ -12,9 +12,10 @@ const { __ } = wp.i18n;
 // Local dependencies.
 import {
   DateTimePickerControl,
+  MediaControl,
+  InspectorControls,
   MediaPlaceholder,
   RichText,
-  InspectorControls,
   URLControl,
   withWordLimit
 } from 'components';
@@ -63,10 +64,13 @@ export default {
             <URLControl name="url" />
             <TextareaControl
               label="Textarea"
-              name="Textarea" />
+              name="textarea" />
             <ToggleControl
               label="Toggle"
               name="toggle" />
+            <MediaControl
+              label="File"
+              name="file" />
             <SelectControl
               label="Select"
               name="select"

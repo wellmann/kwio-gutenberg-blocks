@@ -19,24 +19,32 @@ const recursiveMap = (children, fn) => Children.map(children, (child) => {
 });
 
 const InspectorControlsWrapper = ({ children }) => {
-  const { isSelected, attributes, setAttributes } = useContext(EditContext);
+  const context = useContext(EditContext);
+  const { isSelected, attributes, setAttributes } = context;
 
   return isSelected ? (
     <InspectorControls>
-      { recursiveMap(children, (child) => {
-        if (child.props.hasOwnProperty('name')) {
-          let name = child.props.name;
-          let value = attributes[name];
+      <EditContext.Provider value={ context }>
+        { recursiveMap(children, (child) => {
+          if (child.props.hasOwnProperty('name')) {
+            let name = child.props.name;
+            let value = attributes[name];
 
-          return cloneElement(child, {
-            value,
-            checked: value,
-            onChange: (value) => setAttributes({ [name]: value })
-          });
-        }
+            console.log(child.props);
 
-        return cloneElement(child);
-      }) }
+            return cloneElement(child, {
+              ...{
+                value,
+                checked: value,
+                onChange: (value) => setAttributes({ [name]: value })
+              },
+              ...child.props
+            });
+          }
+
+          return cloneElement(child);
+        }) }
+      </EditContext.Provider>
     </InspectorControls>
   ) : null;
 };
