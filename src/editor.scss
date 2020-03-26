@@ -1,7 +1,12 @@
-// import with file extension, so that webpack does not accidentally import *.js files with the same name!
-//@import "variables.scss";
-//@import "utils.scss";
+//@import "variables";
+//@import "utils.scss"; // import with file extension, so that webpack does not accidentally import utils.js!
+
+div[style] > .components-placeholder {
+  width: inherit;
+  height: inherit;
+  min-height: 0;
+}
 
 .edit-post-visual-editor {
-  //@import "button.scss"; // Nesting for higher specificity to override WordPress default styles.
+  //@import "button"; // Nesting for higher specificity to override WordPress default styles.
 }

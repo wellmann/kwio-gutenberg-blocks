@@ -1,13 +1,15 @@
 // WordPress dependencies.
 const { useContext } = wp.element;
 const { MediaUpload } = wp.blockEditor;
-const { BaseControl, PanelRow, Button } = wp.components;
+const { BaseControl, Button, IconButton } = wp.components;
 const { __ } = wp.i18n;
+const { withInstanceId } = wp.compose;
 
 // Local dependencies.
 import { EditContext } from 'components';
 
 const MediaControl = ({ label, name, ...props }) => {
+  const id = 'inspector-media-control-' + props.instanceId;
   const { attributes, setAttributes } = useContext(EditContext);
   const value = attributes[name];
   const buttonStyle = {
@@ -20,23 +22,31 @@ const MediaControl = ({ label, name, ...props }) => {
 
   return (
     <BaseControl>
-      <PanelRow className="edit-post-post-schedule">
-        <span>{ label }</span>
+      <label htmlFor={ id } className="components-base-control__label">{ label }</label>
+      <div className="components-panel__row" style={ { marginTop: 0 } }>
         <MediaUpload
           onSelect={ ({ id, url }) => setAttributes({ [name]: { id, url } }) }
-          value={ value ? value.id : undefined }
           render={ ({ open }) => (
-            <Button
-              className="edit-post-post-schedule__toggle"
-              style={ buttonStyle }
-              onClick={ open }
-              isLink>{ value ? value.url.split(/[\\/]/).pop() : __('Media Library') }</Button>
+            <>
+              <Button
+                id={ id }
+                onClick={ open }
+                style={ buttonStyle }
+                isLink>{ value ? value.url.split(/[\\/]/).pop() : __('Media Library') }</Button>
+                <IconButton
+                  disabled={ !value }
+                  icon="no-alt"
+                  onClick={ () => setAttributes({ [name]: null }) }
+                  label={ __('Remove') }
+                />
+            </>
           ) }
           { ...props }
+          value={ value ? value.id : null }
         />
-      </PanelRow>
+      </div>
     </BaseControl>
   );
 };
 
-export default MediaControl;
+export default withInstanceId(MediaControl);

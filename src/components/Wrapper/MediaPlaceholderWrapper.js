@@ -21,7 +21,7 @@ const deleteStyle = {
   borderRadius: 4
 };
 
-const MediaPlaceholderWrapper = ({ name, width = '100%', height, ...props }) => {
+const MediaPlaceholderWrapper = ({ name, label = __('Image'), width = '100%', height, ...props }) => {
   const { attributes, setAttributes, className, isSelected } = useContext(EditContext);
   const value = attributes[name];
   const bem = new BEMHelper(className.split(' ')[0]);
@@ -59,15 +59,15 @@ const MediaPlaceholderWrapper = ({ name, width = '100%', height, ...props }) => 
     />
   );
 
-  return value ? <Preview /> : <MediaPlaceholder
+  return value ? <Preview /> : <div style={ { width, height } }><MediaPlaceholder
     { ...bem(name) }
     icon={ <Icon icon="format-image" /> }
-    labels={ { title: __('Image'), instructions: '' } }
+    labels={ { title: label, instructions: '' } }
     onSelect={ onSelect }
     accept="image/*"
     allowedTypes={ allowedTypes }
     { ...props }
-  />;
+  /></div>;
 };
 
 export default MediaPlaceholderWrapper;

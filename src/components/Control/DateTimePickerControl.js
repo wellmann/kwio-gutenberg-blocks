@@ -1,12 +1,14 @@
 // WordPress dependencies.
 const { useContext } = wp.element;
 const { dateI18n, __experimentalGetSettings } = wp.date;
-const { BaseControl PanelRow, Dropdown, Button, DateTimePicker, DatePicker, TimePicker } = wp.components;
+const { PanelRow, Dropdown, Button, DateTimePicker, DatePicker, TimePicker } = wp.components;
+const { withInstanceId } = wp.compose;
 
 // Local dependencies.
 import { EditContext } from 'components';
 
 const DateTimePickerControl = ({ name, label, time = true, date = true, ...props }) => {
+  const id = 'inspector-date-time-picker-control-' + props.instanceId;
   const { attributes } = useContext(EditContext);
   const settings = __experimentalGetSettings();
   const value = attributes[name];
@@ -24,15 +26,15 @@ const DateTimePickerControl = ({ name, label, time = true, date = true, ...props
   }
 
   return (
-    <BaseControl>
-      <PanelRow className="edit-post-post-schedule">
-        <span>{ label }</span>
-        <Dropdown
-          position="bottom left"
-          contentClassName="edit-post-post-schedule__dialog"
-          renderToggle={ ( { onToggle, isOpen } ) => (
+    <PanelRow className="edit-post-post-schedule">
+      <label htmlFor={ id } className="components-base-control__label">{ label }</label>
+      <Dropdown
+        position="bottom left"
+        contentClassName="edit-post-post-schedule__dialog"
+        renderToggle={ ( { onToggle, isOpen } ) => (
           <>
             <Button
+              id={ id }
               className="edit-post-post-schedule__toggle"
               onClick={ onToggle }
               aria-expanded={ isOpen }
@@ -41,15 +43,14 @@ const DateTimePickerControl = ({ name, label, time = true, date = true, ...props
               { dateI18n(format, value || new Date())}
             </Button>
           </>
-          ) }
-          renderContent={ () => <Picker
-            currentDate={ value || new Date() }
-            { ...props }
-          /> }
-        />
-      </PanelRow>
-    </BaseControl>
+        ) }
+        renderContent={ () => <Picker
+          currentDate={ value || new Date() }
+          { ...props }
+        /> }
+      />
+    </PanelRow>
   );
 };
 
-export default DateTimePickerControl;
+export default withInstanceId(DateTimePickerControl);
