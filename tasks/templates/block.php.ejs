@@ -1,0 +1,18 @@
+<?php
+
+namespace <%= pluginNamespace %>
+
+class <%= blockClass %> extends Base_Block {
+
+    public function render(array $attributes, string $content): string {
+        parent::render($attributes, $content);
+
+        $products = $this->get_products();
+
+        return $this->set_view($this->dir_path . '/view.twig', compact('products'));
+    }
+
+    private function get_products(): array {
+        return [];
+    }
+}

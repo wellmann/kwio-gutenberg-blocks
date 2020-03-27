@@ -80,18 +80,6 @@ module.exports = {
     return string.replace(/^(.)|\s+(.)/g, ($1) => $1.toUpperCase());
   },
 
-  copyAndReplace: function (srcFile, destFolder, replaces) {
-    const destFile = destFolder + '/' + srcFile;
-
-    fs.copyFile(this.getPluginPath() + `/templates/${srcFile}.template`, destFile, (error) => {
-      if (error) {
-        throw error;
-      }
-
-      this.replaceInFile(destFile, replaces);
-    });
-  },
-
   replaceInFile: function (file, replaces) {
     const fileBuffer = fs.readFileSync(this.getPluginPath() + '/' + file);
     let fileData = fileBuffer.toString();

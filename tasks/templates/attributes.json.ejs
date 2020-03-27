@@ -1,0 +1,19 @@
+{
+  "null": { "type": "null" },
+  "boolean": { "type": "boolean" },
+  "object": { "type": "object" },
+  "array": { "type": "array" },
+  "number": { "type": "number" },
+  "string": { "type": "string" },
+  "integer": { "type": "integer" },
+  "meta": {
+    "type": "string",
+    "source": "meta",
+    "meta": "meta"
+  }<% if (isFullwidth) { %>,
+    "align": {
+      "type": "string",
+      "default": "full"
+    }
+  <% } %>
+}

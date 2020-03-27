@@ -38,11 +38,19 @@ git clone git@github.com:wellmann/kwio-gutenberg-blocks && npm install
 (**Note**: Run `npm link` before using this command, which in turn should be run after `node tasks/setup.js`.)
 * `npm start` - Start file watcher.
 * `npm run build` - Creates all necessary assets.
-* `create-block <name> [-d|--dynamic]` - Runs custom script to create block with boilerplate code.  
+* `create-block <name>` - Runs custom script to create block with boilerplate code.  
 
 ### Creating custom modules
-To create custom modules run `create-block <name>`. The blocks folder will be created in `src/blocks/<name>` along with the required files and boilerplate code.  
-Use the optional `-d` or `--dynamic` flag to create a dynamic block, which means an additional PHP class (block.php) will be generated in the blocks folder.
+To create custom modules run `create-block <name>`. The blocks folder will be created in `src/blocks/<name>` along with the required files and boilerplate code. 
+
+| Flag | Alias | Description |
+| :--- | :--- | :--- |
+| `--dynamic` | `-d` | A block.php file will be added to the blocks folder.
+| `--fullwidth` | `-w` | Make block fullwidth by default.
+| `--shared-atts` | `-a` | An attributes.json file will be added to the blocks folder.
+| `--critical` | `-c` | Instead of a style.scss a style.critical.scss and an editor.scss file will be added to the blocks folder.
+| `--script-js` | `-j` | A script.js file will be added to the blocks folder.
+| `--editor-css` | `-e` | An editor.scss file will be added to the blocks folder.
 
 #### Categories
 

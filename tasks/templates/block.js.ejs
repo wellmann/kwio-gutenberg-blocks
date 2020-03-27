@@ -1,0 +1,79 @@
+// WordPress dependencies.
+const {
+  FormTokenField,
+  PanelBody,
+  SelectControl,
+  TextControl,
+  TextareaControl,
+  ToggleControl
+} = wp.components;
+const { __ } = wp.i18n;
+
+// Local dependencies.
+import {
+  DateTimePickerControl,
+  MediaControl,
+  InspectorControls,
+  MediaPlaceholder,
+  RichText,
+  URLControl,
+  withWordLimit
+} from 'components';
+<% if (hasAttributesJson) { -%>
+import attributes from './attributes.json';
+<% } -%>
+<% if (isCritical) { -%>
+import './style.critical.scss';
+<% } else { -%>
+import './style.scss';
+<% } -%>
+<% if (hasEditorCss) { -%>
+import './editor.scss';
+<% } -%>
+
+export default {
+  title: '<%= blockTitle %>',
+  description: 'This is the description of the <%= blockTitle %>.',
+  icon: 'welcome-learn-more',
+  <%_ if (hasAttributesJson) { _%>
+  attributes,
+  <%_ } else { -%>
+  attributes: {
+    null: { type: 'null' },
+    boolean: { type: 'boolean' },
+    object: { type: 'object' },
+    array: { type: 'array' },
+    number: { type: 'number' },
+    string: { type: 'string' },
+    integer: { type: 'integer' },
+    meta: {
+      type: 'string',
+      source: 'meta',
+      meta: 'meta'
+    }<%_ if (isFullwidth) { -%>,
+    align: {
+      type: 'string',
+      default: 'full'
+    }
+    <% } %>
+  },
+  <%_ } -%>
+  <%_ if (isFullwidth) { _%>
+  supports: {
+    align: ['full'],
+    anchor: true
+  },
+  <%_ } else { _%>
+  supports: { anchor: true },
+  <%_ } _%>
+  edit({ isSelected }) {
+
+    return (
+      <RichText
+        tagName="h2"
+        placeholder="Lorem Ipsum"
+        name="string"
+      />
+    );
+  }
+};

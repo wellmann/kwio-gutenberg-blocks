@@ -1,0 +1,16 @@
+<% if (isCritical) { -%>
+@import "style.critical.scss";
+<% } else { -%>
+@import "variables";
+
+.<%= blockSlug %> {
+
+  &--modifier {
+
+  }
+
+  &__element {
+
+  }
+}
+<% } -%>
