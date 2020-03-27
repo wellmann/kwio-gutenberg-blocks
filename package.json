@@ -15,6 +15,7 @@
     "create-block": "./bin/create-block.js"
   },
   "scripts": {
+    "setup": "node tasks/setup.js",
     "start": "webpack -w",
     "build": "webpack"
   },

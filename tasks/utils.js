@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* eslint no-console: 0 */
 
 'use strict';
@@ -11,13 +10,15 @@ const chalk = require('chalk');
 // Local dependencies.
 const pkg = require('../package.json');
 
+const cwd = process.cwd();
+
 module.exports = {
 
   /**
    * Template path of the WordPress installation this plugin is part of.
    */
   getTemplatePath: function () {
-    const contentDirPath = path.dirname(path.dirname(this.getPluginPath()));
+    const contentDirPath = path.dirname(path.dirname(cwd));
 
     return contentDirPath + '/themes/' + this.getThemeName();
   },
@@ -44,18 +45,16 @@ module.exports = {
     if (prefix[0]) {
       return prefix[0];
     }
-  },
 
-  getPluginPath: function () {
-    return path.dirname(__dirname);
+    return null;
   },
 
   getNamespace: function () {
     const bootstrapPhpLines = fs
-      .readFileSync(this.getPluginPath() + '/bootstrap.php')
+      .readFileSync(cwd + '/bootstrap.php')
       .toString()
       .split('\n');
-    let namespace;
+    let namespace = '';
 
     bootstrapPhpLines.forEach((line) => {
       if (line.indexOf('namespace') >= 0) {
@@ -81,14 +80,14 @@ module.exports = {
   },
 
   replaceInFile: function (file, replaces) {
-    const fileBuffer = fs.readFileSync(this.getPluginPath() + '/' + file);
+    const fileBuffer = fs.readFileSync(cwd + '/' + file);
     let fileData = fileBuffer.toString();
 
     Object.entries(replaces).forEach(([origVal, newVal]) => {
       fileData = fileData.replace(new RegExp(origVal, 'g'), newVal);
     });
 
-    fs.writeFileSync(this.getPluginPath() + '/' + file, fileData);
+    fs.writeFileSync(cwd + '/' + file, fileData);
   },
 
   errorMessage: function (message) {

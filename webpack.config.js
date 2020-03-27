@@ -27,7 +27,7 @@ const cssLoaderOptions = {
       options: {
         sassOptions: {
           includePaths: [
-            utils.getPluginPath() + '/src',
+            process.cwd() + '/src',
             utils.getTemplatePath() + themeScssIncludes
           ]
         },

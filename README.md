@@ -35,7 +35,7 @@ git clone git@github.com:wellmann/kwio-gutenberg-blocks && cd kwio-gutenberg-blo
 
 ## Commands
 
-* `node tasks/setup.js [-p|--prefix]` - Replaces `KWIO` prefix throughout the entire plugin.
+* `npm run setup -- [-p|--prefix]` - Replaces `KWIO` prefix throughout the entire plugin.
 * `npm start` - Start file watcher.
 * `npm run build` - Create all necessary assets.
 * `create-block <name> [options]` - Run custom script to create block with boilerplate code. 
