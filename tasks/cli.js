@@ -62,7 +62,7 @@ try {
     Object.keys(aliases).map((alias) => {
       console.log(alias + ',', aliases[alias].padEnd(14), descriptions[alias]);
     });
-    process.exit(1);
+    process.exit();
   }
 
   if (fs.existsSync(blockDir)) {
