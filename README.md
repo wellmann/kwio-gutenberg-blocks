@@ -7,8 +7,9 @@ WordPress plugin to facilitate the development of Gutenberg blocks.
 * auto-registration of blocks
 *  only attributes are saved in post content - no markup
 * no need to pass `value`,`setAttributes` and `className` to each component when using our custom wrapper components
-* Improved default components
+* improved default components
 * `create-block` CLI
+* simplified block template registration
 * class names follow the BEM pattern
 * default example attributes
 
@@ -91,6 +92,11 @@ For editor styles create the `editor.scss` file.
 ### view.twig
 
 * Inner HTML markup for the block, that gets populated with data from the attributes, any additional data defined in the `block.php` file and data of the current post.
+
+## Block Templates
+
+Block templates can be created in the `templates` folder. Just create a PHP file named after your post type. For the options look at the examplary templates or the [Handbook](https://developer.wordpress.org/block-editor/developers/block-api/block-templates/).  
+Blocks of this plugin do not need to have their namespace added - this is done automatically.
 
 ## Usage of styles & scripts
 

@@ -20,7 +20,7 @@ class Block_Collector {
         'core/group',
         'core/shortcode'
     ];
-    const BLOCKS_DIR = DIR_PATH . 'src/blocks';
+    const DIR = DIR_PATH . 'src/blocks';
 
     private static $instance;
 
@@ -34,16 +34,16 @@ class Block_Collector {
         return self::$instance;
     }
 
-    public function get_blocks(): array {
+    public function get_all(): array {
 
         return $this->custom_blocks;
     }
 
-    public function register_block(string $block): void {
+    public function register(string $block): void {
         $class_name = 'Base_Block';
 
         // Check if block has a dedicated PHP class.
-        $class_path = self::BLOCKS_DIR . "/{$block}/block.php";
+        $class_path = self::DIR . "/{$block}/block.php";
         if (file_exists($class_path)) {
             require_once $class_path;
             $class_name = $this->form_class_name($block);
