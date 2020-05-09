@@ -1,6 +1,6 @@
 {
   "name": "kwio-gutenberg-blocks",
-  "version": "0.1.0",
+  "version": "3.1.3",
   "description": "Foundation to develop custom blocks for Gutenberg.",
   "author": {
     "name": "Kevin Wellmann",
@@ -17,7 +17,8 @@
   "scripts": {
     "setup": "node tasks/setup.js",
     "start": "webpack -w",
-    "build": "webpack"
+    "build": "webpack",
+    "version": "replace 'Version: \\d+\\.\\d+\\.\\d+' \"Version: $npm_package_version\" ./bootstrap.php && git add bootstrap.php"
   },
   "husky": {
     "hooks": {
@@ -62,6 +63,7 @@
     "lint-staged": "^10.2.2",
     "node-sass": "^4.14.1",
     "react-bem-helper": "^1.4.1",
+    "replace": "^1.2.0",
     "sass-loader": "^8.0.2",
     "stylelint": "^9.10.1",
     "suppress-exit-code": "^0.1.0",
