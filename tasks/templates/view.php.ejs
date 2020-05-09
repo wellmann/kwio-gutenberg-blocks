@@ -1,0 +1,1 @@
+<div class="<?= esc_attr($this->bem('element', ['modifier'])) ?>"><?= esc_html($content) ?></div>

@@ -35,8 +35,7 @@ $lib_folder_path = DIR_PATH . '/lib';
 $lib_files =[
     'utils.php',
     'hooks/assets.php',
-    'hooks/block.php',
-    'hooks/twig.php'
+    'hooks/block.php'
 ];
 
 foreach ($lib_files as $lib_file) {

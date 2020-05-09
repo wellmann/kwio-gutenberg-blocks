@@ -39,7 +39,6 @@ try {
     'bootstrap.php',
     'lib/hooks/assets.php',
     'lib/hooks/block.php',
-    'lib/hooks/twig.php',
     'lib/Base_Block.php',
     'lib/Block_Collector.php',
     'lib/Block_Data.php',

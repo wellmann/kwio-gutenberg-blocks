@@ -18,6 +18,6 @@ class Example extends Base_Block {
 
         //$content = '123';
 
-        return $this->set_view($this->dir_path . '/view.twig', compact('content'));
+        return $this->set_view($this->dir_path . '/view.php', compact('content'));
     }
 }

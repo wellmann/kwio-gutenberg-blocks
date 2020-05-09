@@ -89,7 +89,7 @@ To create custom blocks run `create-block <name>`. The blocks folder will be cre
 * Should be used instead of the `style.scss` when block is displayed above the fold. Styles are put in a seperate `critical.css` file which is then inlined into the html.
 For editor styles create the `editor.scss` file.
 
-### view.twig
+### view.php
 
 * Inner HTML markup for the block, that gets populated with data from the attributes, any additional data defined in the `block.php` file and data of the current post.
 

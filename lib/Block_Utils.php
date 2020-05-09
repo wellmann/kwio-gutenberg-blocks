@@ -5,19 +5,6 @@ namespace KWIO\Gutenberg_Blocks;
 trait Block_Utils {
 
     /**
-     * Utility function for BEM style class names in block views.
-     */
-    public static function bem(array $context, string $element = '', array $modifiers = []): string {
-        $base_class = sanitize_html_class($context['base_class']);
-        $element_class = !empty($element) ? $base_class . '__' . sanitize_html_class($element) : $base_class;
-        $modifiers = array_map(function ($modifier) use ($element_class) {
-            return $element_class . '--' . sanitize_html_class($modifier);
-        }, $modifiers);
-
-        return $element_class . (!empty($modifiers) ? ' ' . implode(' ', $modifiers) : '');
-    }
-
-    /**
      * Use '%s' as a placholder for the base class.
      */
     protected function add_class(string $class): void {

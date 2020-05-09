@@ -74,7 +74,7 @@ try {
   const files = [
     'block.js',
     'style.scss',
-    'view.twig'
+    'view.php'
   ];
 
   if (args['--dynamic']) {

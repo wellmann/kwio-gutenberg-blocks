@@ -2,9 +2,6 @@
 
 namespace KWIO\Gutenberg_Blocks;
 
-use Timber\Post;
-use Timber\Timber;
-
 class Base_Block {
 
     use Block_Utils;
@@ -47,7 +44,7 @@ class Base_Block {
         $this->extract_attr('align', 'class');
         $this->extract_attr('anchor', 'id');
 
-        return $this->set_view($this->dir_path . '/view.twig');
+        return $this->set_view($this->dir_path . '/view.php');
     }
 
     /**
@@ -69,8 +66,8 @@ class Base_Block {
         $this->tag_attr['class'] = convert_to_bem($this->tag_attr['class'], $this->base_class);
         $tag_attr_string = to_tag_attr_string($this->tag_attr);
         $data = array_merge($this->data, $data);
-        $data['post'] = new Post();
-        $block_html = Timber::compile($file, $data);
+        $block_view = new Block_View($data);
+        $block_html = $block_view->load($file);
 
         return "<div{$tag_attr_string}>{$block_html}</div>";
     }
