@@ -7,7 +7,7 @@ namespace KWIO\Gutenberg_Blocks;
  * Plugin Name: KWIO Gutenberg Blocks
  * Plugin URI: https://github.com/wellmann/kwio-gutenberg-blocks
  * Description: Foundation to develop custom blocks for Gutenberg.
- * Version: 3.1.3
+ * Version: 4.0.0
  * Author: Kevin Wellmann
  * License: GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
