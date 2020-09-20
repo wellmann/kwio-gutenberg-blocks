@@ -17,23 +17,11 @@ class Template_Collector {
     }
 
     public function register(string $template): void {
-        if (!isset($_GET['post']) && empty($_GET['post_type'])) {
+        if (basename($_SERVER['SCRIPT_FILENAME']) !== 'post-new.php') {
             return;
         }
 
-        $post_type = !empty($_GET['post_type']) ? $_GET['post_type'] : basename($template, '.php');
-        $option = '';
-        if (in_array($post_type, ['front-page'])) {
-            $post_type = 'page';
-            $option = 'page_on_front';
-        }
-
-        if (!empty($option)) {
-            if ($_GET['post'] !== get_option($option)) {
-                return;
-            }
-        }
-
+        $post_type = !empty($_GET['post_type']) ? $_GET['post_type'] : 'post';
         if (!$post_type_obj = get_post_type_object($post_type)) {
             return;
         }
