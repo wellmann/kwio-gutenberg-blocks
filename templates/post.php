@@ -2,5 +2,5 @@
 
 return [
     'template' => [],
-    'template_lock' => ''
+    'templateLock' => ''
 ];

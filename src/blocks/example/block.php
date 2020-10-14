@@ -1,23 +1,24 @@
 <?php
 
-namespace KWIO\Gutenberg_Blocks;
+namespace KWIO\GutenbergBlocks;
 
-class Example extends Base_Block {
+class Example extends BaseBlock
+{
 
-    public function __construct(string $block_name) {
-        parent::__construct($block_name);
+    public function __construct(string $blockName)
+    {
+        parent::__construct($blockName);
 
-        $this->dir_path = dirname(__FILE__);
-        $this->add_class('js-%s');
-        $this->localize_script(['example' => 'Example']);
-        $this->add_script_data(['tag1' => 'Tag 1', 'tag2' => 'Tag 2']);
+        $this->dirPath = dirname(__FILE__);
+        $this->addClass('js-%s');
+        $this->localizeScript(['example' => 'Example']);
+        $this->addScriptData(['tag1' => 'Tag 1', 'tag2' => 'Tag 2']);
     }
 
-    public function render(array $attributes, string $content): string {
+    public function render(array $attributes, string $content): string
+    {
         parent::render($attributes, $content);
 
-        //$content = '123';
-
-        return $this->set_view($this->dir_path . '/view.php', compact('content'));
+        return $this->setView($this->dirPath . '/view.php');
     }
 }

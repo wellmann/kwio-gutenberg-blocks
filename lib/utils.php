@@ -1,11 +1,12 @@
 <?php
 
-namespace KWIO\Gutenberg_Blocks;
+namespace KWIO\GutenbergBlocks;
 
 /**
  * Enqueue asset based on file name and file type.
  */
-function enqueue_asset(string $filename, string $type, array $dependencies = []): void {
+function enqueue_asset(string $filename, string $type, array $dependencies = []): void
+{
     $path = DIR_PATH . "dist/{$filename}.{$type}";
     if (!is_readable($path)) {
         return;
@@ -13,40 +14,40 @@ function enqueue_asset(string $filename, string $type, array $dependencies = [])
 
     $handle = PREFIX . '-' . $filename;
     $src = DIR_URL . str_replace(DIR_PATH, '', $path);
-    $ver_hash  = substr(md5(filemtime($path)), 0, 12);
+    $verHash  = substr(md5(filemtime($path)), 0, 12);
     $media = $filename === 'blocks' && !is_admin() ? 'nonblocking' : 'all';
-    $block_data = Block_Data::get_instance();
-    $block_data->set_context($filename === 'blocks' ? 'frontend' : $filename);
+    $blockData = BlockData::getInstance();
+    $blockData->setContext($filename === 'blocks' ? 'frontend' : $filename);
 
     if (!function_exists(PREFIX . '\\WP_Defaults\\add_cache_busting_hash')) {
         $media = 'all';
     }
 
     if ($type === 'js') {
-        wp_enqueue_script($handle, $src, $dependencies, $ver_hash, true);
+        wp_enqueue_script($handle, $src, $dependencies, $verHash, true);
     }
 
     if ($type === 'css') {
-        wp_enqueue_style($handle, $src, $dependencies, $ver_hash, $media);
+        wp_enqueue_style($handle, $src, $dependencies, $verHash, $media);
     }
 
     if ($filename === 'editor' && $type === 'js') {
         wp_localize_script($handle, 'blockOptions', [
-            'defaultBlocks' => Block_Collector::DEFAULT_BLOCKS,
-            'data' => $block_data->get_all()
+            'defaultBlocks' => BlockCollector::DEFAULT_BLOCKS,
+            'data' => $blockData->getAll()
         ]);
     }
 
     if ($filename === 'blocks') {
-        if (!empty($block_data->get_all())) {
-            wp_localize_script($handle, 'blockData', $block_data->get_all());
+        if (!empty($blockData->getAll())) {
+            wp_localize_script($handle, 'blockData', $blockData->getAll());
         }
 
-        $critical_css_path = DIR_PATH . 'dist/critical.css';
-        if (is_readable($critical_css_path)) {
-            $critical_css = file_get_contents($critical_css_path);
-            $critical_css = str_replace('../../../../', content_url('/'), $critical_css);
-            wp_add_inline_style($handle, trim($critical_css));
+        $criticalCssPath = DIR_PATH . 'dist/critical.css';
+        if (is_readable($criticalCssPath)) {
+            $criticalCss = file_get_contents($criticalCssPath);
+            $criticalCss = str_replace('../../../../', content_url('/'), $criticalCss);
+            wp_add_inline_style($handle, trim($criticalCss));
         }
     }
 }
@@ -54,10 +55,11 @@ function enqueue_asset(string $filename, string $type, array $dependencies = [])
 /**
  * Workaround until https://github.com/WordPress/gutenberg/issues/11763 is fixed.
  */
-function convert_to_bem(array $classnames, string $base_class): array {
-    return array_map(function (string $classname) use ($base_class): string {
+function convert_to_bem(array $classnames, string $baseClass): array
+{
+    return array_map(function (string $classname) use ($baseClass): string {
         if (strpos($classname, 'is-style-') !== false) {
-            return str_replace('is-style-', $base_class . '--', $classname);
+            return str_replace('is-style-', $baseClass . '--', $classname);
         }
 
         return $classname;
@@ -67,8 +69,9 @@ function convert_to_bem(array $classnames, string $base_class): array {
 /**
  * Convert key-value pairs to string of HTML attributes.
  */
-function to_tag_attr_string(array $array): string {
-    $tag_attr_string = '';
+function to_tag_attr_string(array $array): string
+{
+    $tagAttrString = '';
     foreach ($array as $key => $value) {
         if (empty($key)) {
             continue;
@@ -79,8 +82,8 @@ function to_tag_attr_string(array $array): string {
         }
 
         $value = esc_attr($value);
-        $tag_attr_string .= " {$key}=\"{$value}\"";
+        $tagAttrString .= " {$key}=\"{$value}\"";
     }
 
-    return $tag_attr_string;
+    return $tagAttrString;
 }

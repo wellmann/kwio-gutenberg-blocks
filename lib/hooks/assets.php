@@ -1,6 +1,6 @@
 <?php
 
-namespace KWIO\Gutenberg_Blocks;
+namespace KWIO\GutenbergBlocks;
 
 add_action('enqueue_block_editor_assets', function (): void {
     enqueue_asset('editor', 'js', ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor']);
@@ -18,12 +18,12 @@ add_action('enqueue_block_assets', function (): void {
 /**
  * Add class so we can style the editor more specifically (e.g. for front page).
  */
-add_filter('admin_body_class', function (string $classes_string): string {
+add_filter('admin_body_class', function (string $classesString): string {
     if (!isset($_GET['post'])) {
-        return $classes_string;
+        return $classesString;
     }
 
-    $classes = explode(' ', $classes_string);
+    $classes = explode(' ', $classesString);
 
     if ($_GET['post'] === get_option('page_on_front')) {
         $classes[] = 'is-front-page';
@@ -33,7 +33,7 @@ add_filter('admin_body_class', function (string $classes_string): string {
         $classes[] = 'is-home';
     }
 
-    if ($template = get_post_meta($_GET['post'],'_wp_page_template', true)) {
+    if ($template = get_post_meta($_GET['post'], '_wp_page_template', true)) {
         $classes[] = 'template-' . sanitize_html_class($template);
     }
 
