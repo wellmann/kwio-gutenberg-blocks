@@ -67,8 +67,8 @@ class BaseBlock
             return '';
         }
 
-        $this->tagAttr['class'] = convert_to_bem($this->tagAttr['class'], $this->baseClass);
-        $tagAttrString = to_tag_attr_string($this->tagAttr);
+        $this->tagAttr['class'] = $this->convertIsStyleToBem($this->tagAttr['class']);
+        $tagAttrString = $this->buildTagAttrString($this->tagAttr);
         $data = array_merge($this->data, $data);
         $blockView = new BlockView($data);
         $blockHtml = $blockView->load($file);
@@ -96,5 +96,37 @@ class BaseBlock
         unset($this->data[$attr]);
 
         return $value;
+    }
+
+    /**
+     * Workaround until https://github.com/WordPress/gutenberg/issues/11763 is fixed.
+     */
+    private function convertIsStyleToBem(array $classnames): array
+    {
+        return array_map(function (string $classname): string {
+            return str_replace('is-style-', $this->baseClass . '--', $classname);
+        }, $classnames);
+    }
+
+    /**
+     * Convert key-value pairs to string of HTML attributes.
+     */
+    private function buildTagAttrString(array $array): string
+    {
+        $tagAttrString = '';
+        foreach ($array as $key => $value) {
+            if (empty($key)) {
+                continue;
+            }
+
+            if (is_array($value)) {
+                $value = implode(' ', $value);
+            }
+
+            $value = esc_attr($value);
+            $tagAttrString .= " {$key}=\"{$value}\"";
+        }
+
+        return $tagAttrString;
     }
 }

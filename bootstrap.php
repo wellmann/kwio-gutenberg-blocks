@@ -12,9 +12,9 @@
  * GitHub Plugin URI: https://github.com/wellmann/kwio-gutenberg-blocks
  */
 
- namespace KWIO\GutenbergBlocks;
+namespace KWIO\GutenbergBlocks;
 
- use Exception;
+use Exception;
 
 // Do not access file directly.
 if (!defined('ABSPATH')) {
@@ -33,18 +33,16 @@ if (file_exists(DIR_PATH . 'vendor/autoload.php')) {
     throw new Exception('You need to run "composer update" in the following directory: ' . DIR_PATH . '.');
 }
 
-$libFolderPath = DIR_PATH . '/lib';
-$libFiles = [
-    'utils.php',
-    'hooks/assets.php',
-    'hooks/block.php'
+$hookFiles = [
+    '/src/hooks/assets.php',
+    '/src/hooks/block.php'
 ];
 
-foreach ($libFiles as $libFile) {
-    $libFilePath = "{$libFolderPath}/{$libFile}";
-    if (!file_exists($libFilePath)) {
+foreach ($hookFiles as $hookFile) {
+    $hookFilePath = DIR_PATH . $hookFile;
+    if (!file_exists($hookFilePath)) {
         return;
     }
 
-    include_once $libFilePath;
+    include_once $hookFilePath;
 }

@@ -3,7 +3,7 @@
 // Local dependencies.
 const utils = require('./tasks/utils');
 
-const prefix = utils.getPrefix().toLowerCase();
+const prefix = utils.getPrefix().toLowerCase().trim();
 const textdomain = prefix + '-gutenberg-blocks';
 
 module.exports = {

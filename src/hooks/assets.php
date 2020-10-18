@@ -3,16 +3,23 @@
 namespace KWIO\GutenbergBlocks;
 
 add_action('enqueue_block_editor_assets', function (): void {
-    enqueue_asset('editor', 'js', ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor']);
-    enqueue_asset('editor', 'css', ['wp-edit-blocks']);
+    wp_enqueue_script('kwio-gutenberg-blocks-editor', DIR_URL . 'dist/editor.js', ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'], false, true);
+    wp_enqueue_style('kwio-gutenberg-blocks-editor', DIR_URL . 'dist/editor.css', ['wp-edit-blocks']);
 });
 
 add_action('wp_enqueue_scripts', function (): void {
-    enqueue_asset('blocks', 'js');
+    wp_enqueue_script('kwio-gutenberg-blocks', DIR_URL . 'dist/blocks.js', [], false, true);
 });
 
 add_action('enqueue_block_assets', function (): void {
-    enqueue_asset('blocks', 'css');
+    wp_enqueue_style('kwio-gutenberg-blocks', DIR_URL . 'dist/blocks.css');
+
+    $criticalCssPath = DIR_PATH . 'dist/critical.css';
+    if (is_readable($criticalCssPath)) {
+        $criticalCss = file_get_contents($criticalCssPath);
+        $criticalCss = str_replace('../../../../', content_url('/'), $criticalCss);
+        wp_add_inline_style('kwio-gutenberg-blocks', trim($criticalCss));
+    }
 });
 
 /**

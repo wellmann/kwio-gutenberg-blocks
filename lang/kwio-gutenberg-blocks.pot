@@ -3,26 +3,34 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "X-Generator: babel-plugin-makepot\n"
 
-#: src/blocks/example/block.js:13
-msgid "Example Block"
+#: src/blocks/example/block.js:54
+msgid "Settings"
 msgstr ""
 
-#: src/blocks/example/block.js:15
-msgid "This is the description of the Example Block."
+#: src/components/Control/MediaControl.js:35
+msgid "Media Library"
 msgstr ""
 
-#: src/blocks/example/block.js:52
-msgid "Text"
+#: src/components/Control/MediaControl.js:40
+msgid "Remove"
 msgstr ""
 
-#: src/hooks/device-visibility.js:61
+#: src/components/Wrapper/MediaPlaceholderWrapper.js:24
+msgid "Image"
+msgstr ""
+
+#: src/components/Wrapper/MediaPlaceholderWrapper.js:38
+msgid "Remove image"
+msgstr ""
+
+#: src/hooks/deviceVisibility.js:51
 msgid "Hide on..."
 msgstr ""
 
-#: src/hooks/device-visibility.js:62
+#: src/hooks/deviceVisibility.js:53
 msgid "Mobile"
 msgstr ""
 
-#: src/hooks/device-visibility.js:67
+#: src/hooks/deviceVisibility.js:58
 msgid "Desktop"
 msgstr ""

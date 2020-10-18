@@ -2,13 +2,11 @@
 const { addFilter } = wp.hooks;
 const { hasBlockSupport } = wp.blocks;
 
-const { blockOptions } = window;
-
 /**
- * Groups selected default blocks in custom category.
+ * Groups core blocks in custom category.
  */
 addFilter('blocks.registerBlockType', __PREFIX__ + '/block/category', (settings, name) => {
-  if (blockOptions.defaultBlocks.includes(name)) {
+  if (name.includes('core/')) {
     settings.category = 'wordpress-default';
   }
 

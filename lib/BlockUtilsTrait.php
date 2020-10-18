@@ -14,19 +14,17 @@ trait BlockUtilsTrait
         $this->tagAttr['class'][] = sanitize_html_class($class);
     }
 
-    protected function localizeScript(array $data): void
+    /**
+     * Add additional data via data attribute.
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    protected function addData(string $key, $value): void
     {
-        $blockData = BlockData::getInstance();
-        $blockData->setContext('frontend');
-        $previousData = $blockData->get('i18n');
-        $data = array_merge($previousData, $data);
-        $blockData->add('i18n', $data);
-    }
+        $key = sanitize_html_class($key);
+        $value = is_scalar($value) ? $value : json_encode($value);
 
-    protected function addScriptData(array $data, string $context = 'frontend'): void
-    {
-        $blockData = BlockData::getInstance();
-        $blockData->setContext($context);
-        $blockData->add($this->baseClass, $data);
+        $this->tagAttr['data-' . $key] = esc_attr($value);
     }
 }
