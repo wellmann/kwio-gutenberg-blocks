@@ -1,0 +1,1 @@
+module.exports = { extends: '@kwio/gutenberg-blocks-components/configs/.babelrc.js' };

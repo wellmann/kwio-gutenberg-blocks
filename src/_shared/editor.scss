@@ -1,5 +1,5 @@
 //@import "variables";
-//@import "utils.scss"; // import with file extension, so that webpack does not accidentally import utils.js!
+//@import "utils";
 
 div[style] > .components-placeholder {
   width: inherit;

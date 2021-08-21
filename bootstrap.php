@@ -15,34 +15,20 @@
 namespace KWIO\GutenbergBlocks;
 
 use Exception;
+use KWIO\GutenbergBlocksFramework\Loader;
 
 // Do not access file directly.
 if (!defined('ABSPATH')) {
     exit;
 }
 
-define(__NAMESPACE__ . '\\MAIN_FILE', __FILE__);
-define(__NAMESPACE__ . '\\BASENAME', plugin_basename(MAIN_FILE));
-define(__NAMESPACE__ . '\\DIR_PATH', plugin_dir_path(MAIN_FILE));
-define(__NAMESPACE__ . '\\DIR_URL', plugin_dir_url(MAIN_FILE));
-define(__NAMESPACE__ . '\\PREFIX', sanitize_title(explode('\\', __NAMESPACE__)[0]));
-
-if (file_exists(DIR_PATH . 'vendor/autoload.php')) {
-    include_once DIR_PATH . 'vendor/autoload.php';
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    include_once __DIR__ . '/vendor/autoload.php';
 } else {
-    throw new Exception('You need to run "composer update" in the following directory: ' . DIR_PATH . '.');
+    throw new Exception('You need to run "composer update --no-dev" in the following directory: ' . __DIR__ . '.');
 }
 
-$hookFiles = [
-    '/src/hooks/assets.php',
-    '/src/hooks/block.php'
-];
-
-foreach ($hookFiles as $hookFile) {
-    $hookFilePath = DIR_PATH . $hookFile;
-    if (!file_exists($hookFilePath)) {
-        return;
-    }
-
-    include_once $hookFilePath;
-}
+$frameworkLoader = new Loader(__FILE__);
+$frameworkLoader
+    ->loadBlocks('src/', __NAMESPACE__)
+    ->init();

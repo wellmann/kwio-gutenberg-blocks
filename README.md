@@ -36,15 +36,12 @@ git clone git@github.com:wellmann/kwio-gutenberg-blocks && cd kwio-gutenberg-blo
 
 ## Commands
 
-* `npm run setup -- [-p|--prefix]` - Replaces `KWIO` prefix throughout the entire plugin.
 * `npm start` - Start file watcher.
 * `npm run build` - Create all necessary assets.
-* `create-block <name> [options]` - Run custom script to create block with boilerplate code. 
+* `npx github:wellmann/create-block <name> [options]` - Run custom script to create block with boilerplate code. 
 
 ## Creating custom blocks
-To create custom blocks run `create-block <name>`. The blocks folder will be created in `src/blocks/<name>` along with the required files and boilerplate code. 
-
->Note: You have to `npm link` before using this command.
+To create custom blocks run `npx github:wellmann/create-block <name>`. The blocks folder will be created in `src/blocks/<name>` along with the required files and boilerplate code. 
 
 | Flag | Alias | Description |
 | :--- | :--- | :--- |
@@ -109,6 +106,6 @@ If used in conjunction with a specific setup and theme, variables and mixins fro
 To customize these paths look into the config object of the `package.json`.  
 You can use the following options to alter the defaults:
 
-* `themeDirName`
-* `themeAssets`
-* `themeScssIncludes`
+* `themeSlug`
+* `themeAssetsDir`
+* `themeScssIncludesDir`

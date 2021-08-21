@@ -51,7 +51,7 @@ export default {
           className="button"
         />
         <InspectorControls>
-          <PanelBody title={ __('Settings') }>
+          <PanelBody title={ __('Settings Test', 'test') }>
             {/* <FormTokenField
               value={ '' }
               suggestions={ ['suggestions', 'ghgkg'] }
